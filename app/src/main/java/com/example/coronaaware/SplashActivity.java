@@ -29,7 +29,7 @@ public class SplashActivity extends AppCompatActivity {
                 if(mAuth.getCurrentUser()!=null){
                     Intent intent = new Intent();
                     intent.setClass(SplashActivity.this,
-                            SenderRegisterActivity.class);
+                            PatientRegister.class);
 
                     SplashActivity.this.startActivity(intent);
                     SplashActivity.this.finish();

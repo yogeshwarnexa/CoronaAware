@@ -1,22 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="15dp"
-        tools:context=".PatientRegister">
-
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:orientation="vertical"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
         <EditText
             android:id="@+id/username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Patient Name*"
-            android:textAlignment="center"
-            android:textColorHint="#7E5A5A" />
+            android:maxLength="20"
+            android:textColorHint="@color/colorHint" />
 
         <EditText
             android:id="@+id/phonenumber"
@@ -24,45 +38,54 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/username"
             android:hint="Contact Number*"
-            android:textAlignment="center"
-            android:textColorHint="#7E5A5A" />
+            android:maxLength="10"
+            android:inputType="phone"
+            android:textColorHint="@color/colorHint" />
 
         <EditText
             android:id="@+id/age"
+            android:maxLength="2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/phonenumber"
             android:hint="Age*"
-            android:textAlignment="center"
-            android:textColorHint="#7E5A5A" />
+            android:inputType="number"
+            android:textColorHint="@color/colorHint" />
 
         <EditText
             android:id="@+id/bloodgrp"
+            android:maxLength="3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/age"
             android:hint="Blood Group*"
-            android:textAlignment="center"
-            android:textColorHint="#7E5A5A" />
+            android:textAllCaps="true"
+            android:textColorHint="@color/colorHint" />
 
         <EditText
             android:id="@+id/district"
+            android:maxLength="15"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/bloodgrp"
             android:hint="District*"
-            android:textAlignment="center"
-            android:textColorHint="#7E5A5A" />
+            android:textColorHint="@color/colorHint" />
 
         <EditText
             android:id="@+id/aad_no"
+            android:maxLength="16"
+            android:inputType="number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/district"
             android:hint="Patient AADHAAR NUMBER*"
-            android:textAlignment="center"
-            android:textColorHint="#7E5A5A" />
-
+            android:textColorHint="@color/colorHint" />
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_gravity="center_horizontal"
+    android:gravity="center_vertical|center">
         <TextView
             android:id="@+id/patient_aadhaar_photo"
             android:layout_width="wrap_content"
@@ -73,6 +96,7 @@
             android:textColorHint="#000"
             android:textSize="20sp"
             android:textStyle="bold" />
+
 
         <ImageView
             android:id="@+id/aadhar_photo"
@@ -101,16 +125,18 @@
             android:layout_centerInParent="true"
             android:background="@drawable/ic_person_black_24dp" />
 
-        <Button
-            android:id="@+id/submit_patient_details"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/patient_photo_img"
-            android:layout_centerInParent="true"
-            android:backgroundTint="#5D98C6"
-            android:text="Register Patient Details"
-            android:textSize="15sp" />
-
+</LinearLayout>
+            <Button
+                android:id="@+id/submit_patient_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:background="@drawable/rounded_button_transparent"
+                android:text="@string/registration"
+                android:textAllCaps="false"
+                android:textColor="@color/colorHint" />
+        </LinearLayout>
         <ProgressBar
             android:id="@+id/progressbar"
             android:layout_width="wrap_content"
@@ -120,3 +146,4 @@
             android:visibility="gone" />
     </RelativeLayout>
 </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

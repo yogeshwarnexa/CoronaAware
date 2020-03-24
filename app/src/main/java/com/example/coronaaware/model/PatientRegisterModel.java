@@ -4,6 +4,16 @@ public class PatientRegisterModel {
     private String username, age, bloodGroup, district, contact_no, aadhaar_no, uid;
     private String imageId;
 
+    public String getAadharImage() {
+        return aadharImage;
+    }
+
+    public void setAadharImage(String aadharImage) {
+        this.aadharImage = aadharImage;
+    }
+
+    private String aadharImage;
+
 
     public PatientRegisterModel() {
     }
