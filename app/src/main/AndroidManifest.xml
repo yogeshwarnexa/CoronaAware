@@ -46,7 +46,9 @@
         <activity
             android:name=".SenderRegisterActivity"
             android:theme="@style/AppTheme" />
-
+        <activity
+            android:name=".SignUpActivity"
+            android:theme="@style/AppTheme" />
         <service
             android:name="service.NotificationService"
             android:exported="false">
