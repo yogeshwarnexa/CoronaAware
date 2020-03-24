@@ -14,7 +14,7 @@
             android:id="@+id/username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Patient Name"
+            android:hint="Patient Name*"
             android:textAlignment="center"
             android:textColorHint="#7E5A5A" />
 
@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/username"
-            android:hint="Copntact Number"
+            android:hint="Contact Number*"
             android:textAlignment="center"
             android:textColorHint="#7E5A5A" />
 
@@ -32,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/phonenumber"
-            android:hint="Age"
+            android:hint="Age*"
             android:textAlignment="center"
             android:textColorHint="#7E5A5A" />
 
@@ -41,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/age"
-            android:hint="Blood Group"
+            android:hint="Blood Group*"
             android:textAlignment="center"
             android:textColorHint="#7E5A5A" />
 
@@ -50,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/bloodgrp"
-            android:hint="District"
+            android:hint="District*"
             android:textAlignment="center"
             android:textColorHint="#7E5A5A" />
 
@@ -59,7 +59,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/district"
-            android:hint="Patient AADHAAR NUMBER"
+            android:hint="Patient AADHAAR NUMBER*"
             android:textAlignment="center"
             android:textColorHint="#7E5A5A" />
 
@@ -110,5 +110,13 @@
             android:backgroundTint="#5D98C6"
             android:text="Register Patient Details"
             android:textSize="15sp" />
+
+        <ProgressBar
+            android:id="@+id/progressbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:visibility="gone" />
     </RelativeLayout>
 </ScrollView>

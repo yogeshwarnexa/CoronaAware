@@ -53,4 +53,6 @@
     <string name="district">District*</string>
     <string name="state">State*</string>
     <string name="pincode">Pin code*</string>
+
+    <string name="patient_registration">Patient Registration</string>
 </resources>
