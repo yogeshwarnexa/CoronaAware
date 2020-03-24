@@ -19,4 +19,38 @@
     <!-- [END fcm_default_icon_string] -->
     <string name="msg_subscribe_failed">Failed to subscribe to weather topic</string>
     <string name="fcm_message">FCM Message</string>
+
+
+    <!--Firebase-->
+
+    <string name="index_sing_up_app" translatable="false">@string/title_sing_up</string>
+    <string name="title_sing_up" translatable="false">Sign Up</string>
+    <string name="firebase_username" translatable="false">Email Id*</string>
+    <string name="firebase_password" translatable="false">Password</string>
+    <string name="firebase_confirmpassword" translatable="false">Confirm Password</string>
+    <string name="firebase_emailrequired" translatable="false">Email is required</string>
+    <string name="firebase_namerequired" translatable="false">Name is required</string>
+    <string name="firebase_mobolerequired" translatable="false">Name is required</string>
+    <string name="firebase_Addressrequired" translatable="false">Address is required</string>
+    <string name="firebase_occupation_required" translatable="false">Occupation is required</string>
+    <string name="firebase_emailValidation" translatable="false">Please enter a valid email</string>
+    <string name="firebase_mobileValidation" translatable="false">Please enter a valid mobile</string>
+    <string name="firebase_passwordrequired" translatable="false">Password is required</string>
+    <string name="firebase_passwordConfirmrequired" translatable="false">Password is miss matched!</string>
+    <string name="firebase_passwordValidation" translatable="false">Minimum lenght of password should be 6</string>
+    <string name="firebase_alredy_register" translatable="false">You are already registered</string>
+    <string name="firebase_alredy_login" translatable="false">You are already Loged in</string>
+    <string name="firebase_login_success" translatable="false">You have successfully logged in</string>
+    <string name="firebase_logout_success" translatable="false">You have successfully logged out</string>
+    <string name="firebase_needto_login" translatable="false">You need to login first!</string>
+    <!--Registration-->
+    <string name="registration">Registration</string>
+    <string name="name">Name*</string>
+    <string name="mobile">Mobile*</string>
+    <string name="occupation">Occupation*</string>
+    <string name="Address">Address line1*</string>
+    <string name="Address2">Address line2*</string>
+    <string name="district">District*</string>
+    <string name="state">State*</string>
+    <string name="pincode">Pin code*</string>
 </resources>
