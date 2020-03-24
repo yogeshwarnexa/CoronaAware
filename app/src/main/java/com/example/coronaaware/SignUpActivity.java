@@ -2,6 +2,7 @@ package com.example.coronaaware;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.MenuItem;
 import android.view.View;
@@ -61,18 +62,25 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             myRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    UserRegisterModel userRegisterModel = dataSnapshot.getValue(UserRegisterModel.class);
-                    if (mAuth.getUid().equals(userRegisterModel.getUid())) {
-                        editTextAddress1.setText(userRegisterModel.getAddress());
-                        editTextAddress2.setText(userRegisterModel.getAddress2());
-                        editTextDistrict.setText(userRegisterModel.getDistrict());
-                        editTextEmail.setText(userRegisterModel.getEmail());
-                        editTextMobile.setText(userRegisterModel.getMobile());
-                        editTextOccupation.setText(userRegisterModel.getOccupation());
-                        editTextPincode.setText(userRegisterModel.getPincode());
-                        editTextState.setText(userRegisterModel.getState());
-                        editTextName.setText(userRegisterModel.getName());
+                    if(dataSnapshot.exists()){
+                        for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
+                            UserRegisterModel userRegisterModel = dataSnapshot1.getValue(UserRegisterModel.class);
+                            if(userRegisterModel.getUid() != null  ) {
+                                if (mAuth.getUid().equals(userRegisterModel.getUid())) {
+                                    editTextAddress1.setText(userRegisterModel.getAddress());
+                                    editTextAddress2.setText(userRegisterModel.getAddress2());
+                                    editTextDistrict.setText(userRegisterModel.getDistrict());
+                                    editTextEmail.setText(userRegisterModel.getEmail());
+                                    editTextMobile.setText(userRegisterModel.getMobile());
+                                    editTextOccupation.setText(userRegisterModel.getOccupation());
+                                    editTextPincode.setText(userRegisterModel.getPincode());
+                                    editTextState.setText(userRegisterModel.getState());
+                                    editTextName.setText(userRegisterModel.getName());
+                                }
+                            }
+                        }
                     }
+
                 }
 
                 @Override
@@ -174,7 +182,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("User");
-        myRef.setValue(userRegisterModel, new DatabaseReference.CompletionListener() {
+        myRef.push().setValue(userRegisterModel, new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                 if (databaseError != null) {
@@ -184,12 +192,15 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                     System.out.println("Data saved successfully.");
                     progressBar.setVisibility(View.GONE);
                     Toast.makeText(SignUpActivity.this, "Data saved successfully.", Toast.LENGTH_SHORT).show();
+
                     startActivity(new Intent(getApplicationContext(), PatientRegister.class));
+
+                    finish();
+                    startActivity(new Intent(SignUpActivity.this, SenderRegisterActivity.class));
+
                 }
             }
         });
-
-
     }
 
     @Override
