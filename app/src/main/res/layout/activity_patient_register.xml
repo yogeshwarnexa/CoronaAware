@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="15dp"
+        tools:context=".PatientRegister">
+
+        <EditText
+            android:id="@+id/username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Patient Name"
+            android:textAlignment="center"
+            android:textColorHint="#7E5A5A" />
+
+        <EditText
+            android:id="@+id/phonenumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/username"
+            android:hint="Copntact Number"
+            android:textAlignment="center"
+            android:textColorHint="#7E5A5A" />
+
+        <EditText
+            android:id="@+id/age"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/phonenumber"
+            android:hint="Age"
+            android:textAlignment="center"
+            android:textColorHint="#7E5A5A" />
+
+        <EditText
+            android:id="@+id/bloodgrp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/age"
+            android:hint="Blood Group"
+            android:textAlignment="center"
+            android:textColorHint="#7E5A5A" />
+
+        <EditText
+            android:id="@+id/district"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bloodgrp"
+            android:hint="District"
+            android:textAlignment="center"
+            android:textColorHint="#7E5A5A" />
+
+        <EditText
+            android:id="@+id/aad_no"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/district"
+            android:hint="Patient AADHAAR NUMBER"
+            android:textAlignment="center"
+            android:textColorHint="#7E5A5A" />
+
+        <TextView
+            android:id="@+id/patient_aadhaar_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/aad_no"
+            android:layout_centerInParent="true"
+            android:text="AADHAAR PHOTO"
+            android:textColorHint="#000"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/aadhar_photo"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_below="@+id/patient_aadhaar_photo"
+            android:layout_centerInParent="true"
+            android:background="@drawable/ic_person_black_24dp" />
+
+        <TextView
+            android:id="@+id/patient_photo_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/aadhar_photo"
+            android:layout_centerInParent="true"
+            android:text="PATIENT PHOTO"
+            android:textColorHint="#000"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/patient_photo_img"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_below="@+id/patient_photo_name"
+            android:layout_centerInParent="true"
+            android:background="@drawable/ic_person_black_24dp" />
+
+        <Button
+            android:id="@+id/submit_patient_details"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/patient_photo_img"
+            android:layout_centerInParent="true"
+            android:backgroundTint="#5D98C6"
+            android:text="Register Patient Details"
+            android:textSize="15sp" />
+    </RelativeLayout>
+</ScrollView>
