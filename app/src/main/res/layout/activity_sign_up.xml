@@ -37,7 +37,7 @@
                     android:hint="@string/name"
                     android:inputType="textPersonName"
                     android:paddingBottom="15dp"
-                    android:textColorHint="@color/colorAccent" />
+                    android:textColorHint="@color/colorHint" />
 
                 <EditText
                     android:id="@+id/editTextMobile"
@@ -48,7 +48,7 @@
                     android:hint="@string/mobile"
                     android:inputType="phone"
                     android:paddingBottom="15dp"
-                    android:textColorHint="@color/colorAccent" />
+                    android:textColorHint="@color/colorHint" />
 
                 <EditText
                     android:id="@+id/editTextEmail"
@@ -59,7 +59,7 @@
                     android:hint="@string/firebase_username"
                     android:inputType="textEmailAddress"
                     android:paddingBottom="15dp"
-                    android:textColorHint="@color/colorAccent" />
+                    android:textColorHint="@color/colorHint" />
 
                 <EditText
                     android:id="@+id/editTextOccupation"
@@ -70,7 +70,7 @@
                     android:hint="@string/occupation"
                     android:inputType="textPersonName"
                     android:paddingBottom="15dp"
-                    android:textColorHint="@color/colorAccent" />
+                    android:textColorHint="@color/colorHint" />
 
                 <EditText
                     android:id="@+id/editTextAddress"
@@ -82,7 +82,7 @@
                     android:inputType="textPostalAddress"
                     android:maxLines="5"
                     android:paddingBottom="15dp"
-                    android:textColorHint="@color/colorAccent" />
+                    android:textColorHint="@color/colorHint" />
 
                 <EditText
                     android:id="@+id/editTextAddress2"
@@ -93,7 +93,7 @@
                     android:hint="@string/Address2"
                     android:inputType="textPostalAddress"
                     android:paddingBottom="15dp"
-                    android:textColorHint="@color/colorAccent" />
+                    android:textColorHint="@color/colorHint" />
 
                 <EditText
                     android:id="@+id/editTextDistrict"
@@ -104,7 +104,7 @@
                     android:hint="@string/district"
                     android:inputType="textPostalAddress"
                     android:paddingBottom="15dp"
-                    android:textColorHint="@color/colorAccent" />
+                    android:textColorHint="@color/colorHint" />
 
 
                 <LinearLayout
@@ -123,7 +123,7 @@
                         android:hint="@string/state"
                         android:inputType="textPostalAddress"
                         android:paddingBottom="15dp"
-                        android:textColorHint="@color/colorAccent" />
+                        android:textColorHint="@color/colorHint" />
 
                     <EditText
                         android:id="@+id/editTextPincode"
@@ -135,7 +135,7 @@
                         android:hint="@string/pincode"
                         android:inputType="number"
                         android:paddingBottom="15dp"
-                        android:textColorHint="@color/colorAccent" />
+                        android:textColorHint="@color/colorHint" />
                 </LinearLayout>
 
                 <Button
@@ -147,7 +147,7 @@
                     android:background="@drawable/rounded_button_transparent"
                     android:text="@string/registration"
                     android:textAllCaps="false"
-                    android:textColor="@color/colorAccent" />
+                    android:textColor="@color/colorHint" />
 
 
             </LinearLayout>
