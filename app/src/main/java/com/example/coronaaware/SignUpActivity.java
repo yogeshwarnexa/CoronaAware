@@ -192,8 +192,12 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                     System.out.println("Data saved successfully.");
                     progressBar.setVisibility(View.GONE);
                     Toast.makeText(SignUpActivity.this, "Data saved successfully.", Toast.LENGTH_SHORT).show();
+
+                    startActivity(new Intent(getApplicationContext(), PatientRegister.class));
+
                     finish();
                     startActivity(new Intent(SignUpActivity.this, SenderRegisterActivity.class));
+
                 }
             }
         });
