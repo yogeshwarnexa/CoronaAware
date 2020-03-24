@@ -8,10 +8,13 @@ import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class SplashActivity extends AppCompatActivity {
 
     private static final int SPLASH_DISPLAY_TIME = 2500;
 
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,16 +22,26 @@ public class SplashActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash);
-
+        mAuth = FirebaseAuth.getInstance();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent();
-                intent.setClass(SplashActivity.this,
-                        OTPAuthentication.class);
+                if(mAuth.getCurrentUser()!=null){
+                    Intent intent = new Intent();
+                    intent.setClass(SplashActivity.this,
+                            SenderRegisterActivity.class);
 
-                SplashActivity.this.startActivity(intent);
-                SplashActivity.this.finish();
+                    SplashActivity.this.startActivity(intent);
+                    SplashActivity.this.finish();
+                }else{
+                    Intent intent = new Intent();
+                    intent.setClass(SplashActivity.this,
+                            OTPAuthentication.class);
+
+                    SplashActivity.this.startActivity(intent);
+                    SplashActivity.this.finish();
+                }
+
             }
         }, SPLASH_DISPLAY_TIME);
     }
