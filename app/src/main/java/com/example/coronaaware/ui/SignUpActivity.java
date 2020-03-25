@@ -1,6 +1,8 @@
 package com.example.coronaaware.ui;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.MenuItem;
@@ -25,7 +27,9 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     ProgressBar progressBar;
     EditText editTextEmail, editTextName, editTextMobile, editTextAddress1, editTextAddress2, editTextOccupation, editTextDistrict, editTextState, editTextPincode;
-
+    public static final String MyPREFERENCES = "MyPrefs";
+    public static final String Name = "userName";
+    SharedPreferences sharedpreferences;
 
     private FirebaseAuth mAuth;
 
@@ -49,6 +53,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         editTextDistrict = findViewById(R.id.editTextDistrict);
         editTextState = findViewById(R.id.editTextState);
         editTextPincode = findViewById(R.id.editTextPincode);
+
+        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
 
         progressBar = findViewById(R.id.progressbar);
@@ -167,6 +173,9 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             return;
         }
         progressBar.setVisibility(View.VISIBLE);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString(Name, name);
+        editor.apply();
 
         UserRegisterModel userRegisterModel = new UserRegisterModel();
         userRegisterModel.setName(name);

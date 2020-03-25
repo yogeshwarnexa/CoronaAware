@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.coronaaware.R;
@@ -18,18 +19,22 @@ import java.util.ArrayList;
 
 public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder> {
     private ArrayList<PatientRegisterModel> patientRegisterModelArrayList;
+    private Context ctx;
+
 
     // RecyclerView recyclerView;
     public ReportAdapter(ArrayList<PatientRegisterModel> patientRegisterModelArrayList, Context context) {
         this.patientRegisterModelArrayList = patientRegisterModelArrayList;
+        ctx = context;
+
     }
 
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View listItem = layoutInflater.inflate(R.layout.list_item, parent, false);
-        ViewHolder viewHolder = new ViewHolder(listItem);
-        return viewHolder;
+        return new ViewHolder(listItem);
     }
 
     @Override
@@ -58,7 +63,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
         public TextView textView;
         public RelativeLayout relativeLayout;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
 
             this.textView = itemView.findViewById(R.id.name);

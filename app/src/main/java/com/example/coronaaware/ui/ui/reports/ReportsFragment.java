@@ -33,7 +33,7 @@ public class ReportsFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_reports, container, false);
+        final View root = inflater.inflate(R.layout.fragment_reports, container, false);
         mAuth = FirebaseAuth.getInstance();
         patientRegisterModelArrayList = new ArrayList<>();
         if (mAuth.getCurrentUser() != null) {
@@ -48,7 +48,17 @@ public class ReportsFragment extends Fragment {
                             PatientRegisterModel patientRegisterModel = dataSnapshot1.getValue(PatientRegisterModel.class);
                             patientRegisterModelArrayList.add(patientRegisterModel);
                         }
+
                     }
+                    RecyclerView recyclerView = root.findViewById(R.id.recyclerview);
+                    Log.d("Getting values", "values");
+                    recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                    mAdapter = new ReportAdapter(patientRegisterModelArrayList, getContext());
+                    recyclerView.setItemAnimator(new DefaultItemAnimator());
+                    recyclerView.setHasFixedSize(true);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                    recyclerView.setAdapter(mAdapter);
+                    Log.d("EnteredView", "view");
                     Log.e("Size", String.valueOf(patientRegisterModelArrayList.size()));
                 }
 
@@ -57,13 +67,7 @@ public class ReportsFragment extends Fragment {
 
                 }
             });
-            RecyclerView recyclerView = root.findViewById(R.id.recyclerview);
-            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-            mAdapter = new ReportAdapter(patientRegisterModelArrayList, getActivity());
-            recyclerView.setItemAnimator(new DefaultItemAnimator());
-            recyclerView.setHasFixedSize(true);
-            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-            recyclerView.setAdapter(mAdapter);
+
 
         }
 

@@ -1,9 +1,12 @@
 package com.example.coronaaware.ui;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +25,9 @@ public class MainActivity extends AppCompatActivity {
 
     FirebaseAuth mAuth;
     private AppBarConfiguration mAppBarConfiguration;
+    public static final String MyPREFERENCES = "MyPrefs";
+    public static final String Name = "userName";
+    SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +37,11 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+        View header = navigationView.getHeaderView(0);
+        TextView text_uname = header.findViewById(R.id.text_name);
+        preferences = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+        text_uname.setText(preferences.getString(Name, "Welcome"));
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
