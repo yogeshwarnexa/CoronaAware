@@ -1,4 +1,4 @@
-package com.example.coronaaware.ui;
+package com.example.coronaaware.ui.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
