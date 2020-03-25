@@ -4,14 +4,17 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.coronaaware.R;
 import com.example.coronaaware.model.PatientRegisterModel;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -41,8 +44,12 @@ public class ReportsFragment extends Fragment {
         firebaseDatabase = FirebaseDatabase.getInstance();
         reference = firebaseDatabase.getReference("PatientRegister");
         recyclerView = root.findViewById(R.id.recyclerview);
+
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
+                linearLayoutManager.getOrientation());
+        recyclerView.addItemDecoration(dividerItemDecoration);
         recyclerView.setLayoutManager(linearLayoutManager);
         showList();
 
@@ -59,7 +66,16 @@ public class ReportsFragment extends Fragment {
                 new FirebaseRecyclerAdapter<PatientRegisterModel, UserViewHolder>(options) {
                     @Override
                     protected void onBindViewHolder(@NonNull final UserViewHolder holder, int position, @NonNull PatientRegisterModel model) {
-                        holder.userName.setText("Patient Name : " + model.getUsername());
+                        holder.userName.setText("Name : " + model.getUsername());
+                        holder.age.setText("Age : " + model.getAge());
+                        holder.mobile.setText("Mobile No : " + model.getContact_no());
+                        holder.listDistrict.setText("District : " + model.getDistrict());
+                        holder.listAadhar.setText("AADHAR No: " + model.getAadhaar_no());
+                        holder.bloodgroup.setText("Blood Group : " + model.getBloodGroup());
+                        Glide.with(getActivity())
+                                .load(model.getImageId())
+                                .into(holder.imageView);
+
                     }
 
                     @NonNull
@@ -77,12 +93,19 @@ public class ReportsFragment extends Fragment {
 
     public static class UserViewHolder extends RecyclerView.ViewHolder {
 
-        TextView userName;
-
+        TextView userName, mobile, age, listDistrict, listAadhar, bloodgroup;
+        ImageView imageView;
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
 
             userName = itemView.findViewById(R.id.name);
+            mobile = itemView.findViewById(R.id.mobile);
+            age = itemView.findViewById(R.id.age);
+            listDistrict = itemView.findViewById(R.id.listDistrict);
+            listAadhar = itemView.findViewById(R.id.listAadhar);
+            userName = itemView.findViewById(R.id.name);
+            bloodgroup = itemView.findViewById(R.id.bloodgroup);
+            imageView = itemView.findViewById(R.id.imageView);
         }
     }
 
