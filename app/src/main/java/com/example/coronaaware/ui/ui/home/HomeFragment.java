@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -36,14 +38,22 @@ public class HomeFragment extends Fragment {
     ArrayList<CovidTrack> covidTrackArrayList;
     PieChartView pieChartView;
     ProgressDialog progressDialog;
+    TextView titleConfirmed, titleRecovered, titleDeath, titleHome;
+    EditText searchTextview;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         pieChartView = root.findViewById(R.id.chart);
         covidTrackArrayList = new ArrayList<>();
+        titleConfirmed = root.findViewById(R.id.titleConfirmed);
+        titleRecovered = root.findViewById(R.id.titleRecovered);
+        titleDeath = root.findViewById(R.id.titleDeath);
+        titleHome = root.findViewById(R.id.titleHome);
+        searchTextview = root.findViewById(R.id.searchText);
         new GetCovid19().execute();
         return root;
     }
+
 
     private class GetCovid19 extends AsyncTask<String, Void, String> {
 
@@ -106,7 +116,13 @@ public class HomeFragment extends Fragment {
                     pieChartData.setHasLabels(true).setValueLabelTextSize(14);
                     pieChartData.setHasCenterCircle(true).setCenterText1("COVID-19 World wide").setCenterText1FontSize(20).setCenterText1Color(Color.parseColor("#0097A7"));
                     pieChartView.setPieChartData(pieChartData);
-
+                    titleHome.setText("COVID-19 World wide");
+                    titleConfirmed.setText("Confirmed : " + latest.getInt("confirmed"));
+                    titleConfirmed.setTextColor(Color.BLUE);
+                    titleRecovered.setText("Recovered : " + latest.getInt("recovered"));
+                    titleRecovered.setTextColor(Color.GREEN);
+                    titleDeath.setText("Deaths : " + latest.getInt("deaths"));
+                    titleDeath.setTextColor(Color.RED);
                     JSONObject confirmed = jsonObject.getJSONObject("confirmed");
                     JSONArray jsonArray = confirmed.getJSONArray("locations");
                     for (int i = 0; i < jsonArray.length(); i++) {

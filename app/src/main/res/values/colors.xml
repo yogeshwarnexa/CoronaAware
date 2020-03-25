@@ -7,4 +7,5 @@
     <color name="colorHint">#7E5A5A</color>
     <color name="colorBlack">#000000</color>
     <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBackground">#DDDDDD</color>
 </resources>
