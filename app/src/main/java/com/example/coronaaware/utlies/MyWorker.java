@@ -1,4 +1,4 @@
-package com.example.coronaaware;
+package com.example.coronaaware.utlies;
 
 import android.content.Context;
 import android.util.Log;

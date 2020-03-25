@@ -1,4 +1,4 @@
-package com.example.coronaaware;
+package com.example.coronaaware.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.coronaaware.R;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class SplashActivity extends AppCompatActivity {
@@ -29,7 +30,7 @@ public class SplashActivity extends AppCompatActivity {
                 if(mAuth.getCurrentUser()!=null){
                     Intent intent = new Intent();
                     intent.setClass(SplashActivity.this,
-                            PatientRegister.class);
+                            MainActivity.class);
 
                     SplashActivity.this.startActivity(intent);
                     SplashActivity.this.finish();

@@ -1,4 +1,4 @@
-package com.example.coronaaware;
+package com.example.coronaaware.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.coronaaware.R;
 
 public class OTPAuthentication extends AppCompatActivity {
     private EditText editTextMobile;

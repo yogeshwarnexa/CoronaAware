@@ -18,8 +18,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".PatientRegister"
-            android:theme="@style/AppTheme"></activity>
+        <activity
+            android:name=".ui.MainActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/NoActionBar"></activity>
         <!-- [START fcm_default_icon] -->
         <!--
  Set custom default icon. This is used when no icon is set for incoming notification messages.
@@ -39,7 +41,7 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="@string/default_notification_channel_id" /> <!-- [END fcm_default_channel] -->
-        <activity android:name=".SplashActivity">
+        <activity android:name=".ui.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -47,11 +49,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SenderRegisterActivity"
+            android:name=".ui.SenderRegisterActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".SignUpActivity"
+            android:name=".ui.SignUpActivity"
             android:theme="@style/AppTheme" />
+
         <service
             android:name="service.NotificationService"
             android:exported="false">
@@ -60,8 +63,8 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".VerifyPhoneActivity" />
-        <activity android:name=".OTPAuthentication" />
+        <activity android:name=".ui.VerifyPhoneActivity" />
+        <activity android:name=".ui.OTPAuthentication" />
     </application>
 
 </manifest>
