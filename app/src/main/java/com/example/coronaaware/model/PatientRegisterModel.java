@@ -18,6 +18,20 @@ public class PatientRegisterModel {
     public PatientRegisterModel() {
     }
 
+    public PatientRegisterModel(String username, String age, String bloodGroup,
+                                String district, String contact_no,
+                                String aadhaar_no, String uid, String imageId, String aadharImage) {
+        this.username = username;
+        this.age = age;
+        this.bloodGroup = bloodGroup;
+        this.district = district;
+        this.contact_no = contact_no;
+        this.aadhaar_no = aadhaar_no;
+        this.uid = uid;
+        this.imageId = imageId;
+        this.aadharImage = aadharImage;
+    }
+
     public String getUsername() {
         return username;
     }

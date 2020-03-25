@@ -29,8 +29,8 @@ public class HomeFragment extends Fragment {
         PieChartView pieChartView = root.findViewById(R.id.chart);
         List<SliceValue> pieData = new ArrayList<>();
         pieData.add(new SliceValue(500, Color.BLUE).setLabel("India: 500"));
-        pieData.add(new SliceValue(5000, Color.GRAY).setLabel("china: 5000"));
-        pieData.add(new SliceValue(60000, Color.RED).setLabel("italy: 60000"));
+        pieData.add(new SliceValue(5000, Color.GRAY).setLabel("China: 5000"));
+        pieData.add(new SliceValue(60000, Color.RED).setLabel("Italy: 60000"));
         pieData.add(new SliceValue(1500, Color.MAGENTA).setLabel("USA: 1500"));
         PieChartData pieChartData = new PieChartData(pieData);
         pieChartData.setHasLabels(true);
