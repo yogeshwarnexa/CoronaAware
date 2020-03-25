@@ -1,6 +1,5 @@
 package com.example.coronaaware.ui.adapter;
 
-import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +19,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
     private ArrayList<PatientRegisterModel> patientRegisterModelArrayList;
 
     // RecyclerView recyclerView;
-    public ReportAdapter(ArrayList<PatientRegisterModel> patientRegisterModelArrayList, Context context) {
+    public ReportAdapter(ArrayList<PatientRegisterModel> patientRegisterModelArrayList) {
         this.patientRegisterModelArrayList = patientRegisterModelArrayList;
     }
 
@@ -35,16 +34,10 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final PatientRegisterModel myListData = patientRegisterModelArrayList.get(position);
+        Log.d("ListSize", String.valueOf(patientRegisterModelArrayList.size()));
+
         Log.e("Name", myListData.getUsername());
         holder.textView.setText(myListData.getUsername());
-       /* holder.textView.setText(listdata[position].getDescription());
-        holder.imageView.setImageResource(listdata[position].getImgId());
-        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(view.getContext(),"click on item: "+myListData.getDescription(),Toast.LENGTH_LONG).show();
-            }
-        });*/
     }
 
 
