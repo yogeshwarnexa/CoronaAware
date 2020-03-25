@@ -4,4 +4,4 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/coronaone"
-    tools:context=".ui.SplashActivity"></androidx.constraintlayout.widget.ConstraintLayout>
+    tools:context=".ui.ui.SplashActivity"></androidx.constraintlayout.widget.ConstraintLayout>

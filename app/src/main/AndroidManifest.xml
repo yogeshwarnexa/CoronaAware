@@ -19,7 +19,7 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.ui.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/NoActionBar"></activity>
         <!-- [START fcm_default_icon] -->
@@ -41,7 +41,7 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="@string/default_notification_channel_id" /> <!-- [END fcm_default_channel] -->
-        <activity android:name=".ui.SplashActivity">
+        <activity android:name=".ui.ui.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -49,10 +49,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.SenderRegisterActivity"
+            android:name=".ui.ui.SenderRegisterActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.SignUpActivity"
+            android:name=".ui.ui.SignUpActivity"
             android:theme="@style/AppTheme" />
 
         <service
@@ -63,8 +63,8 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".ui.VerifyPhoneActivity" />
-        <activity android:name=".ui.OTPAuthentication" />
+        <activity android:name=".ui.ui.VerifyPhoneActivity" />
+        <activity android:name=".ui.ui.OTPAuthentication" />
     </application>
 
 </manifest>

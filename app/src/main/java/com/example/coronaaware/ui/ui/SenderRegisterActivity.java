@@ -1,4 +1,4 @@
-package com.example.coronaaware.ui;
+package com.example.coronaaware.ui.ui;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
