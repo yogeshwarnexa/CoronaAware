@@ -1,4 +1,4 @@
-package com.example.coronaaware;
+package com.example.coronaaware.ui;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.coronaaware.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -100,7 +101,7 @@ public class SenderRegisterActivity extends AppCompatActivity {
                         // Log and toast
                         String msg = getString(R.string.msg_token_fmt, token);
                         Log.d(TAG, "Token received:::" + msg);
-                        startActivity(new Intent(getApplicationContext(), PatientRegister.class));
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
                         //Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
                     }
                 });
