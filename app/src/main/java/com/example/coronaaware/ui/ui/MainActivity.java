@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.Menu_AboutUs:
                 //About US
-                startActivity(new Intent(getApplicationContext(), WebView.class));
+                startActivity(new Intent(getApplicationContext(), AboutUs.class));
                 finish();
                 break;
 
