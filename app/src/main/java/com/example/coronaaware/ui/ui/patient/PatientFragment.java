@@ -215,10 +215,15 @@ public class PatientFragment extends Fragment implements View.OnClickListener {
         JSONObject notifcationBody = new JSONObject();
         try {
             notifcationBody.put("title", "COVID-19 Update");
-            notifcationBody.put("message", "See Reports");
-
+            notifcationBody.put("body", "See Reports");
+            notifcationBody.put("mutable_content", true);
+            notifcationBody.put("sound", "Tri-tone");
+// "title": "Check this Mobile (title) success",
+//      "body": "Rich Notification testing (body)",
+//      "mutable_content": true,
+//      "sound": "Tri-tone"
             notification.put("to", TOPIC);
-            notification.put("data", notifcationBody);
+            notification.put("notification", notifcationBody);
         } catch (JSONException e) {
             Log.e("onCreate: ", e.getMessage());
         }
