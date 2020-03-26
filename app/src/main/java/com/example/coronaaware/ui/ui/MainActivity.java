@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.Menu_AboutUs:
                 //About US
+                
                 break;
 
             case R.id.Menu_LogOutMenu:

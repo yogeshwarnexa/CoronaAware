@@ -37,7 +37,7 @@ public class SplashActivity extends AppCompatActivity {
                 } else {
                     Intent intent = new Intent();
                     intent.setClass(SplashActivity.this,
-                            SignUpActivity.class);
+                            OTPAuthentication.class);
 
                     SplashActivity.this.startActivity(intent);
                     SplashActivity.this.finish();

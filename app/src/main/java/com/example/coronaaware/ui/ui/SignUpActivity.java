@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -82,7 +83,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         }
 
         //Creating intent for catching the link
-        Intent intent = getIntent();
+        /*Intent intent = getIntent();
         if (intent != null && intent.getData() != null) {
             email_link = intent.getData().toString();
             Log.d(TAG, "got an intent: " + email_link);
@@ -92,7 +93,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             startActivity(new Intent(getApplicationContext(), OTPAuthentication.class));
             finish();
         }
-
+*/
         if (mAuth.getCurrentUser() != null) {
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference myRef = database.getReference("User");
@@ -227,14 +228,14 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                 if (databaseError != null) {
                     System.out.println("Data could not be saved " + databaseError.getMessage());
-                    //Toast.makeText(SignUpActivity.this, "Data could not be saved", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUpActivity.this, "Data could not be saved", Toast.LENGTH_SHORT).show();
                 } else {
                     System.out.println("Data saved successfully.");
                     progressBar.setVisibility(View.GONE);
-                    //Toast.makeText(SignUpActivity.this, "Data saved successfully.", Toast.LENGTH_SHORT).show();
-                    /*finish();
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));*/
-                    sendVerificationMail(adminEmail);
+                    Toast.makeText(SignUpActivity.this, "Data saved successfully.", Toast.LENGTH_SHORT).show();
+                    finish();
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    //sendVerificationMail(adminEmail);
 
                 }
             }

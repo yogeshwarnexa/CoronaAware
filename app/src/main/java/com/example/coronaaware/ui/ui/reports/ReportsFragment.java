@@ -2,6 +2,7 @@ package com.example.coronaaware.ui.ui.reports;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.coronaaware.R;
 import com.example.coronaaware.model.PatientRegisterModel;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -30,6 +32,7 @@ public class ReportsFragment extends Fragment {
     private View root;
     private RecyclerView recyclerView;
     ProgressDialog progressDialog;
+
     public ReportsFragment() {
 
     }
@@ -76,9 +79,20 @@ public class ReportsFragment extends Fragment {
                         holder.listDistrict.setText("District : " + model.getDistrict());
                         holder.listAadhar.setText("AADHAR No: " + model.getAadhaar_no());
                         holder.bloodgroup.setText("Blood Group : " + model.getBloodGroup());
-                        Glide.with(getActivity())
+
+                        Log.d("Images", "images into loaded");
+                        RequestOptions options = new RequestOptions()
+                                .centerCrop()
+                                .placeholder(R.mipmap.ic_launcher_round)
+                                .error(R.mipmap.ic_launcher_round);
+
+                        Glide.with(getContext())
                                 .load(model.getImageId())
+                                .apply(options)
                                 .into(holder.imageView);
+
+                        //Picasso.get().load(model.getImageId()).error(R.mipmap.ic_launcher_round).into(holder.imageView);
+
 
                     }
 
@@ -99,6 +113,7 @@ public class ReportsFragment extends Fragment {
 
         TextView userName, mobile, age, listDistrict, listAadhar, bloodgroup;
         ImageView imageView;
+
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -110,7 +125,11 @@ public class ReportsFragment extends Fragment {
             userName = itemView.findViewById(R.id.name);
             bloodgroup = itemView.findViewById(R.id.bloodgroup);
             imageView = itemView.findViewById(R.id.imageView);
+
+
         }
+
+
     }
 
 }
