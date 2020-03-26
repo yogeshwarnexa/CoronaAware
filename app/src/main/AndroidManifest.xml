@@ -64,6 +64,7 @@
             </intent-filter>
         </service>
 
+
         <activity android:name=".ui.ui.VerifyPhoneActivity" />
         <activity android:name=".ui.ui.OTPAuthentication" />
     </application>

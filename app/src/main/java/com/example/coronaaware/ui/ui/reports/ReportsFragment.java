@@ -1,5 +1,6 @@
 package com.example.coronaaware.ui.ui.reports;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +29,7 @@ public class ReportsFragment extends Fragment {
     FirebaseDatabase firebaseDatabase;
     private View root;
     private RecyclerView recyclerView;
-
+    ProgressDialog progressDialog;
     public ReportsFragment() {
 
     }
@@ -51,6 +52,8 @@ public class ReportsFragment extends Fragment {
                 linearLayoutManager.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
         recyclerView.setLayoutManager(linearLayoutManager);
+        progressDialog = ProgressDialog.show(getActivity(),
+                "", "Please Wait!");
         showList();
 
         return root;
@@ -66,6 +69,7 @@ public class ReportsFragment extends Fragment {
                 new FirebaseRecyclerAdapter<PatientRegisterModel, UserViewHolder>(options) {
                     @Override
                     protected void onBindViewHolder(@NonNull final UserViewHolder holder, int position, @NonNull PatientRegisterModel model) {
+                        progressDialog.dismiss();
                         holder.userName.setText("Name : " + model.getUsername());
                         holder.age.setText("Age : " + model.getAge());
                         holder.mobile.setText("Mobile No : " + model.getContact_no());
