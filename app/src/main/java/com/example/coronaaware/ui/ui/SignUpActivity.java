@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,12 +17,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.coronaaware.R;
 import com.example.coronaaware.model.UserRegisterModel;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -100,7 +104,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     }
 
-    private void registerUser() {
+    private void registerUser(String newToken) {
         final String email = editTextEmail.getText().toString().trim();
         final String name = editTextName.getText().toString();
         final String mobile = editTextMobile.getText().toString();
@@ -187,7 +191,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         userRegisterModel.setState(state);
         userRegisterModel.setPincode(pincode);
         userRegisterModel.setUid(mAuth.getUid());
-
+        userRegisterModel.setAccessToken(newToken);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("User");
         myRef.push().setValue(userRegisterModel, new DatabaseReference.CompletionListener() {
@@ -222,7 +226,15 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.buttonSignUp:
-                registerUser();
+                FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(this, new OnSuccessListener<InstanceIdResult>() {
+                    @Override
+                    public void onSuccess(InstanceIdResult instanceIdResult) {
+                        String newToken = instanceIdResult.getToken();
+                        Log.e("newToken", newToken);
+                        registerUser(newToken);
+                    }
+                });
+
                 break;
         }
     }

@@ -57,7 +57,7 @@
             android:theme="@style/AppTheme" />
 
         <service
-            android:name="service.NotificationService"
+            android:name="com.example.coronaaware.service.NotificationService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
