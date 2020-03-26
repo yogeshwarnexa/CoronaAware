@@ -1,13 +1,16 @@
 package com.example.coronaaware.ui.ui.home;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +43,7 @@ public class HomeFragment extends Fragment {
     ProgressDialog progressDialog;
     TextView titleConfirmed, titleRecovered, titleDeath, titleHome;
     EditText searchTextview;
+    ImageView searchCountry;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
@@ -50,11 +54,26 @@ public class HomeFragment extends Fragment {
         titleDeath = root.findViewById(R.id.titleDeath);
         titleHome = root.findViewById(R.id.titleHome);
         searchTextview = root.findViewById(R.id.searchText);
+        searchCountry = root.findViewById(R.id.searchCountry);
         new GetCovid19().execute();
+        searchCountry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String countryCode = searchTextview.getText().toString();
+                if (countryCode.isEmpty()) {
+                    searchTextview.setError("Required Country code");
+                    searchTextview.requestFocus();
+                    return;
+                } else {
+                    new GetCovid19Country().execute(countryCode);
+                }
+            }
+        });
         return root;
     }
 
 
+    @SuppressLint("StaticFieldLeak")
     private class GetCovid19 extends AsyncTask<String, Void, String> {
 
         @Override
@@ -97,24 +116,14 @@ public class HomeFragment extends Fragment {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     JSONObject latest = jsonObject.getJSONObject("latest");
-                    CovidTrack covidTrack = new CovidTrack();
-                    covidTrack.setConfirmed(latest.getInt("confirmed"));
-                    covidTrack.setDeaths(latest.getInt("deaths"));
-                    covidTrack.setRecovered(latest.getInt("recovered"));
-                    covidTrack.setCountouryName("world wide");
-                    covidTrack.setConutryCode("WW");
-                    covidTrackArrayList.add(covidTrack);
-
-
                     List<SliceValue> pieData = new ArrayList<>();
                     pieData.add(new SliceValue(latest.getInt("confirmed"), Color.BLUE).setLabel("confirmed : " + latest.getInt("confirmed")));
                     pieData.add(new SliceValue(latest.getInt("recovered"), Color.GREEN).setLabel("recovered : " + latest.getInt("recovered")));
                     pieData.add(new SliceValue(latest.getInt("deaths"), Color.RED).setLabel("deaths :" + latest.getInt("deaths")));
-
                     PieChartData pieChartData = new PieChartData(pieData);
                     pieChartData.setHasLabels(true);
-                    pieChartData.setHasLabels(true).setValueLabelTextSize(14);
-                    pieChartData.setHasCenterCircle(true).setCenterText1("COVID-19 World wide").setCenterText1FontSize(20).setCenterText1Color(Color.parseColor("#0097A7"));
+                    pieChartData.setHasLabels(true).setValueLabelTextSize(15);
+                    pieChartData.setHasCenterCircle(true).setCenterText1("COVID-19 World wide").setCenterText1FontSize(15).setCenterText1Color(Color.parseColor("#0097A7"));
                     pieChartView.setPieChartData(pieChartData);
                     titleHome.setText("COVID-19 World wide");
                     titleConfirmed.setText("Confirmed : " + latest.getInt("confirmed"));
@@ -123,29 +132,93 @@ public class HomeFragment extends Fragment {
                     titleRecovered.setTextColor(Color.GREEN);
                     titleDeath.setText("Deaths : " + latest.getInt("deaths"));
                     titleDeath.setTextColor(Color.RED);
-                    JSONObject confirmed = jsonObject.getJSONObject("confirmed");
-                    JSONArray jsonArray = confirmed.getJSONArray("locations");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                Toast.makeText(getActivity(), "Network Problem", Toast.LENGTH_LONG).show();
+            }
+        }
+
+    }
+
+    private class GetCovid19Country extends AsyncTask<String, Void, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            progressDialog = ProgressDialog.show(getActivity(),
+                    "", "Please Wait!");
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            Log.e("Code", params[0]);
+            String countryUrl = "https://coronavirus-tracker-api.herokuapp.com/v2/locations?country_code=" + params[0];
+            String response;
+
+            try {
+                Request request = new Request.Builder().url(countryUrl).get().build();
+                OkHttpClient okHttpClient = new OkHttpClient();
+                Response response1 = okHttpClient.newCall(request).execute();
+                if (!response1.isSuccessful()) {
+                    return null;
+                }
+                ResponseBody body = response1.body();
+                response = body.string();
+                return response;
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            progressDialog.dismiss();
+
+            if (result != null) {
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+                    JSONObject latest = jsonObject.getJSONObject("latest");
+                    CovidTrack covidTrack = new CovidTrack();
+                    covidTrack.setConfirmed(latest.getInt("confirmed"));
+                    covidTrack.setDeaths(latest.getInt("deaths"));
+                    covidTrack.setRecovered(latest.getInt("recovered"));
+
+                    JSONArray jsonArray = jsonObject.getJSONArray("locations");
+                    String country = null, countryCode = null;
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-                        CovidTrack covidTrack1 = new CovidTrack();
-                        covidTrack1.setConutryCode(jsonObject1.getString("country_code"));
-                        covidTrack1.setCountouryName(jsonObject1.getString("country"));
-                        covidTrack1.setConfirmed(jsonObject1.getInt("latest"));
-                        JSONObject location = jsonObject1.getJSONObject("coordinates");
-                        covidTrack1.setLat(location.getString("lat"));
-                        covidTrack1.setLng(location.getString("long"));
-
-                        JSONObject deaths = jsonObject.getJSONObject("deaths");
-                        JSONArray deathsJson = deaths.getJSONArray("locations");
-                        JSONObject deathsobject = deathsJson.getJSONObject(i);
-                        covidTrack1.setDeaths(deathsobject.getInt("latest"));
-
-                        JSONObject recovered = jsonObject.getJSONObject("recovered");
-                        JSONArray recoveredJson = recovered.getJSONArray("locations");
-                        JSONObject recoveredobject = recoveredJson.getJSONObject(i);
-                        covidTrack1.setDeaths(recoveredobject.getInt("latest"));
-                        covidTrackArrayList.add(covidTrack1);
+                        country = jsonObject1.getString("country");
+                        countryCode = jsonObject1.getString("country_code");
                     }
+
+
+                    covidTrack.setCountouryName(country);
+                    covidTrack.setConutryCode(countryCode);
+                    String tiltle = "COVID-19 " + country;
+
+                    List<SliceValue> pieData = new ArrayList<>();
+                    pieData.add(new SliceValue(latest.getInt("confirmed"), Color.BLUE).setLabel("confirmed : " + latest.getInt("confirmed")));
+                    pieData.add(new SliceValue(latest.getInt("recovered"), Color.GREEN).setLabel("recovered : " + latest.getInt("recovered")));
+                    pieData.add(new SliceValue(latest.getInt("deaths"), Color.RED).setLabel("deaths :" + latest.getInt("deaths")));
+
+                    PieChartData pieChartData = new PieChartData(pieData);
+                    pieChartData.setHasLabels(true);
+                    pieChartData.setHasLabels(true).setValueLabelTextSize(15);
+                    pieChartData.setHasCenterCircle(true).setCenterText1(tiltle).setCenterText1FontSize(15).setCenterText1Color(Color.parseColor("#0097A7"));
+                    pieChartView.setPieChartData(pieChartData);
+                    titleHome.setText(tiltle);
+                    titleConfirmed.setText("Confirmed : " + latest.getInt("confirmed"));
+                    titleConfirmed.setTextColor(Color.BLUE);
+                    titleRecovered.setText("Recovered : " + latest.getInt("recovered"));
+                    titleRecovered.setTextColor(Color.GREEN);
+                    titleDeath.setText("Deaths : " + latest.getInt("deaths"));
+                    titleDeath.setTextColor(Color.RED);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
