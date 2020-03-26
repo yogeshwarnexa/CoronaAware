@@ -10,14 +10,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.coronaaware.R;
 import com.example.coronaaware.model.UserRegisterModel;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.ActionCodeSettings;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -35,6 +38,12 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     public static final String MyPREFERENCES = "MyPrefs";
     public static final String Name = "userName";
     SharedPreferences sharedpreferences;
+    private static final String KEY_PENDING_EMAIL = "key_pending_email";
+    String email = "ityogesh5@gmail.com";
+    String email_link, pending_email;
+    String adminEmail = "ityogesh5@gmail.com";
+    String TAG = "EMAIL_AUTH";
+    private SharedPreferences pref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,16 +73,39 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         mAuth = FirebaseAuth.getInstance();
 
         findViewById(R.id.buttonSignUp).setOnClickListener(this);
+
+        //Reading preferences if it?s already been set
+        pref = getApplicationContext().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
+        pending_email = pref.getString(KEY_PENDING_EMAIL, null);
+
+        //Checking for pending email?.
+        if (pending_email != null) {
+            adminEmail = pending_email;
+            Log.d(TAG, "Getting Shared Preferences" + pending_email);
+        }
+
+        //Creating intent for catching the link
+        Intent intent = getIntent();
+        if (intent != null && intent.getData() != null) {
+            email_link = intent.getData().toString();
+            Log.d(TAG, "got an intent: " + email_link);
+        }
+        // Confirm the link is a sign-in with email link.
+        if (mAuth.isSignInWithEmailLink(email_link)) {
+            startActivity(new Intent(getApplicationContext(), OTPAuthentication.class));
+            finish();
+        }
+
         if (mAuth.getCurrentUser() != null) {
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference myRef = database.getReference("User");
             myRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    if(dataSnapshot.exists()){
-                        for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
+                    if (dataSnapshot.exists()) {
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                             UserRegisterModel userRegisterModel = dataSnapshot1.getValue(UserRegisterModel.class);
-                            if(userRegisterModel.getUid() != null  ) {
+                            if (userRegisterModel.getUid() != null) {
                                 if (mAuth.getUid().equals(userRegisterModel.getUid())) {
                                     editTextAddress1.setText(userRegisterModel.getAddress());
                                     editTextAddress2.setText(userRegisterModel.getAddress2());
@@ -99,7 +131,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
 
         }
-
 
 
     }
@@ -199,13 +230,15 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                 if (databaseError != null) {
                     System.out.println("Data could not be saved " + databaseError.getMessage());
-                    Toast.makeText(SignUpActivity.this, "Data could not be saved", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(SignUpActivity.this, "Data could not be saved", Toast.LENGTH_SHORT).show();
                 } else {
                     System.out.println("Data saved successfully.");
                     progressBar.setVisibility(View.GONE);
-                    Toast.makeText(SignUpActivity.this, "Data saved successfully.", Toast.LENGTH_SHORT).show();
-                    finish();
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    //Toast.makeText(SignUpActivity.this, "Data saved successfully.", Toast.LENGTH_SHORT).show();
+                    /*finish();
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));*/
+                    sendVerificationMail(adminEmail);
+
                 }
             }
         });
@@ -237,5 +270,32 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
                 break;
         }
+    }
+
+    private void sendVerificationMail(final String email) {
+        //Save Email Address using SharedPreference Editor.
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString(KEY_PENDING_EMAIL, email);
+        editor.apply();
+        Log.d(TAG, "Email sending...");
+
+        ActionCodeSettings actionCodeSettings = ActionCodeSettings.newBuilder().setAndroidPackageName(getPackageName(), false,
+                null).setHandleCodeInApp(true).setUrl("https://com.example.trackcovid19/?https://trackcovid19.page.link/ZCg5").build();
+
+        mAuth.sendSignInLinkToEmail(email, actionCodeSettings).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Log.d(TAG, "Email Sent..." + email);
+                    //Toast.makeText(getApplicationContext(), "Email Sent For Approval", Toast.LENGTH_LONG).show();
+
+                } else {
+                    Log.d(TAG, "Email sending failed...");
+                }
+
+            }
+        });
+
+
     }
 }
