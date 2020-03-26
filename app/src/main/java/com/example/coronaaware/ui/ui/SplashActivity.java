@@ -27,17 +27,17 @@ public class SplashActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if(mAuth.getCurrentUser()!=null){
+                if (mAuth.getCurrentUser() != null) {
                     Intent intent = new Intent();
                     intent.setClass(SplashActivity.this,
                             MainActivity.class);
 
                     SplashActivity.this.startActivity(intent);
                     SplashActivity.this.finish();
-                }else{
+                } else {
                     Intent intent = new Intent();
                     intent.setClass(SplashActivity.this,
-                            OTPAuthentication.class);
+                            SignUpActivity.class);
 
                     SplashActivity.this.startActivity(intent);
                     SplashActivity.this.finish();
