@@ -1,4 +1,4 @@
-package service;
+package com.example.coronaaware.service;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;

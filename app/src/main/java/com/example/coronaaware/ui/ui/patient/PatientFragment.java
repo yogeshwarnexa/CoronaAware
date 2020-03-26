@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -25,8 +26,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.coronaaware.R;
 import com.example.coronaaware.model.PatientRegisterModel;
+import com.example.coronaaware.ui.ui.push.MySingleton;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,16 +42,27 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
+import com.squareup.okhttp.ResponseBody;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import static android.app.Activity.RESULT_OK;
 
 
 public class PatientFragment extends Fragment implements View.OnClickListener {
-
+    public static final String MyPREFERENCES = "MyPrefs";
 
     DatabaseReference reference;
     PatientRegisterModel patientRegisterModel;
@@ -62,6 +78,14 @@ public class PatientFragment extends Fragment implements View.OnClickListener {
     private StorageReference mstorageReference;
     private Uri imageUri;
     private FirebaseAuth mAuth;
+    final private String FCM_API = "https://fcm.googleapis.com/fcm/send";
+    final private String serverKey = "key=" + "AAAAKfkoTOo:APA91bExqgChh45MY6qC6VrFTClULHfKNkpKFcAHA9SdINPS3hZg0P3Gtu9VETmfpMYLTeJdPzoZ87v93NlboH1zCqAA7O6tZMoSASPvKgBPwdeXwMbG4xlRJ4mk0wPP40Oh-EnCHeY5";
+    final private String contentType = "application/json";
+    ProgressDialog progressDialog;
+    SharedPreferences sharedpreferences;
+    String NOTIFICATION_TITLE;
+    String NOTIFICATION_MESSAGE;
+    String TOPIC;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -90,6 +114,7 @@ public class PatientFragment extends Fragment implements View.OnClickListener {
         img_aadhaar.setOnClickListener(this);
         img_patient.setOnClickListener(this);
         send_details.setOnClickListener(this);
+        sharedpreferences = getActivity().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         return root;
     }
 
@@ -171,21 +196,65 @@ public class PatientFragment extends Fragment implements View.OnClickListener {
                     System.out.println("Data could not be saved " + databaseError.getMessage());
                     Toast.makeText(getActivity(), "Data could not be saved", Toast.LENGTH_SHORT).show();
                 } else {
-                    System.out.println("Data saved successfully.");
-                    progressBar.setVisibility(View.GONE);
-                    Toast.makeText(getActivity(), "Data saved successfully.", Toast.LENGTH_SHORT).show();
-                    name.setText("");
-                    age.setText("");
-                    bloodGroup.setText("");
-                    phone_number.setText("");
-                    district.setText("");
-                    aad_no.setText("");
-                    img_aadhaar.setImageResource(R.drawable.aadhar);
-                    img_patient.setImageResource(R.drawable.person);
+                    sendNotification();
                 }
             }
         });
 
+    }
+
+    private void sendNotification() {
+        System.out.println("Data saved successfully.");
+        progressBar.setVisibility(View.GONE);
+        Toast.makeText(getActivity(), "Data saved successfully.", Toast.LENGTH_SHORT).show();
+        NOTIFICATION_TITLE = "TEST";
+        NOTIFICATION_MESSAGE = "Success";
+
+        TOPIC = sharedpreferences.getString("AccessToken", "");
+        JSONObject notification = new JSONObject();
+        JSONObject notifcationBody = new JSONObject();
+        try {
+            notifcationBody.put("title", "COVID-19 Update");
+            notifcationBody.put("message", "See Reports");
+
+            notification.put("to", TOPIC);
+            notification.put("data", notifcationBody);
+        } catch (JSONException e) {
+            Log.e("onCreate: ", e.getMessage());
+        }
+
+        name.setText("");
+        age.setText("");
+        bloodGroup.setText("");
+        phone_number.setText("");
+        district.setText("");
+        aad_no.setText("");
+        img_aadhaar.setImageResource(R.drawable.aadhar);
+        img_patient.setImageResource(R.drawable.person);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(FCM_API, notification,
+                new com.android.volley.Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.i("onResponse: ", response.toString());
+
+                    }
+                },
+                new com.android.volley.Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getActivity(), "Request error", Toast.LENGTH_LONG).show();
+
+                    }
+                }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("Authorization", serverKey);
+                params.put("Content-Type", contentType);
+                return params;
+            }
+        };
+        MySingleton.getInstance(getActivity()).addToRequestQueue(jsonObjectRequest);
     }
 
 
@@ -297,6 +366,57 @@ public class PatientFragment extends Fragment implements View.OnClickListener {
 
         } else {
             Toast.makeText(getActivity(), "Camera not supported", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private class SendNotification extends AsyncTask<JSONObject, Void, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            progressDialog = ProgressDialog.show(getActivity(),
+                    "", "Please Wait!");
+
+        }
+
+        @Override
+        protected String doInBackground(JSONObject... jsonObjects) {
+            String response;
+            String accessToken = "key=AAAAKfkoTOo:APA91bExqgChh45MY6qC6VrFTClULHfKNkpKFcAHA9SdINPS3hZg0P3Gtu9VETmfpMYLTeJdPzoZ87v93NlboH1zCqAA7O6tZMoSASPvKgBPwdeXwMbG4xlRJ4mk0wPP40Oh-EnCHeY5";
+            Log.e("AccessToken", accessToken);
+            try {
+                MediaType mediaType = MediaType.parse("application/json; charset=utf-8");
+                RequestBody body = RequestBody.create(mediaType, jsonObjects.toString());
+                Request request = new Request.Builder().url("https://fcm.googleapis.com/fcm/send").addHeader("Authorization", accessToken).post(body).build();
+                OkHttpClient okHttpClient = new OkHttpClient();
+                Response response1 = okHttpClient.newCall(request).execute();
+                Log.e("response", response1.message());
+                if (!response1.isSuccessful()) {
+                    Log.e("response", String.valueOf(response1.code()));
+                    return null;
+                } else {
+                    Log.e("response", String.valueOf(response1.code()));
+                    ResponseBody resbody = response1.body();
+                    response = resbody.string();
+                    return response;
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            progressDialog.dismiss();
+            /*try {
+                JSONObject jsonObject = new JSONObject(result);
+                Log.e("Success",jsonObject.getString("success"));
+            }catch (Exception ex){
+                ex.printStackTrace();
+            }*/
         }
     }
 }

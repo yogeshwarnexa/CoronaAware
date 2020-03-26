@@ -1,21 +1,29 @@
 package com.example.coronaaware.ui.ui;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.coronaaware.R;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 public class SplashActivity extends AppCompatActivity {
 
     private static final int SPLASH_DISPLAY_TIME = 2500;
 
     FirebaseAuth mAuth;
+    public static final String MyPREFERENCES = "MyPrefs";
+    SharedPreferences sharedpreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +32,19 @@ public class SplashActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash);
         mAuth = FirebaseAuth.getInstance();
+        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        if (mAuth.getCurrentUser() != null) {
+            FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(this, new OnSuccessListener<InstanceIdResult>() {
+                @Override
+                public void onSuccess(InstanceIdResult instanceIdResult) {
+                    String newToken = instanceIdResult.getToken();
+                    Log.e("newToken", newToken);
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.putString("AccessToken", newToken);
+                    editor.apply();
+                }
+            });
+        }
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
