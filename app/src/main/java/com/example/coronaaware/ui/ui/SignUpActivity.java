@@ -17,6 +17,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.coronaaware.R;
+import com.example.coronaaware.model.MappingModel;
 import com.example.coronaaware.model.UserRegisterModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -38,6 +39,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private FirebaseAuth mAuth;
     public static final String MyPREFERENCES = "MyPrefs";
     public static final String Name = "userName";
+    public static final String dr_district = "district";
     SharedPreferences sharedpreferences;
     private static final String KEY_PENDING_EMAIL = "key_pending_email";
     String email = "ityogesh5@gmail.com";
@@ -45,6 +47,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     String adminEmail = "ityogesh5@gmail.com";
     String TAG = "EMAIL_AUTH";
     private SharedPreferences pref;
+    String intentStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +58,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle(R.string.registration);
         }
-
+        Intent intent = getIntent();
+        intentStatus = intent.getStringExtra("value");
 
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextName = findViewById(R.id.editTextName);
@@ -99,7 +103,12 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 */
         if (mAuth.getCurrentUser() != null) {
             FirebaseDatabase database = FirebaseDatabase.getInstance();
-            DatabaseReference myRef = database.getReference("User");
+            DatabaseReference myRef;
+            if (intentStatus.equals("doctors")) {
+                myRef = database.getReference("User");
+            } else {
+                myRef = database.getReference("Officials");
+            }
             myRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -136,7 +145,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     }
 
-    private void registerUser(String newToken) {
+    private void registerUser(final String newToken) {
         final String email = editTextEmail.getText().toString().trim();
         final String name = editTextName.getText().toString();
         final String mobile = editTextMobile.getText().toString();
@@ -210,6 +219,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putString(Name, name);
+        editor.putString(dr_district, district);
         editor.apply();
 
         UserRegisterModel userRegisterModel = new UserRegisterModel();
@@ -225,10 +235,47 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         userRegisterModel.setUid(mAuth.getUid());
         userRegisterModel.setAccessToken(newToken);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("User");
+        DatabaseReference myRef;
+        if (intentStatus.equals("doctors")) {
+            myRef = database.getReference("User");
+        } else {
+            myRef = database.getReference("Officials");
+        }
+
         myRef.push().setValue(userRegisterModel, new DatabaseReference.CompletionListener() {
             @Override
-            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+            public void onComplete(DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
+                if (databaseError != null) {
+                    System.out.println("Data could not be saved " + databaseError.getMessage());
+                    Toast.makeText(SignUpActivity.this, "Data could not be saved", Toast.LENGTH_SHORT).show();
+                } else {
+                    System.out.println("Data saved successfully.");
+                    progressBar.setVisibility(View.GONE);
+                    Toast.makeText(SignUpActivity.this, "Data saved successfully.", Toast.LENGTH_SHORT).show();
+                    if (intentStatus.equals("doctors")) {
+                        finish();
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    } else {
+                        mapping(district, newToken, name);
+                    }
+
+                    //sendVerificationMail(adminEmail);
+
+                }
+            }
+        });
+    }
+
+    private void mapping(String district, String newToken, String name) {
+        MappingModel mappingModel = new MappingModel();
+        mappingModel.setAccessToken(newToken);
+        mappingModel.setDistrict(district);
+        mappingModel.setName(name);
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Mapping");
+        myRef.push().setValue(mappingModel, new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
                 if (databaseError != null) {
                     System.out.println("Data could not be saved " + databaseError.getMessage());
                     Toast.makeText(SignUpActivity.this, "Data could not be saved", Toast.LENGTH_SHORT).show();
@@ -238,7 +285,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                     Toast.makeText(SignUpActivity.this, "Data saved successfully.", Toast.LENGTH_SHORT).show();
                     finish();
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                    //sendVerificationMail(adminEmail);
+
 
                 }
             }
