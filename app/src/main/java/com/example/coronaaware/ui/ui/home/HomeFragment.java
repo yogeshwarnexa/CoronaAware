@@ -155,7 +155,13 @@ public class HomeFragment extends Fragment {
         @Override
         protected String doInBackground(String... params) {
             Log.e("Code", params[0]);
-            String countryUrl = "https://coronavirus-tracker-api.herokuapp.com/v2/locations?country_code=" + params[0];
+            String countryUrl = null;
+            if (params.length == 2) {
+                countryUrl = "https://coronavirus-tracker-api.herokuapp.com/v2/locations?country_code=" + params[0];
+            } else {
+                countryUrl = "https://coronavirus-tracker-api.herokuapp.com/v2/locations?country=" + params[0];
+            }
+
             String response;
 
             try {
