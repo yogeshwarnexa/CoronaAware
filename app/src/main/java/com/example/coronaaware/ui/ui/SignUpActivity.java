@@ -219,7 +219,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putString(Name, name);
-        editor.putString(dr_district, district);
         editor.apply();
 
         UserRegisterModel userRegisterModel = new UserRegisterModel();
