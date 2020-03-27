@@ -8,7 +8,6 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -30,24 +29,21 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.coronaaware.R;
+import com.example.coronaaware.model.MappingModel;
 import com.example.coronaaware.model.PatientRegisterModel;
 import com.example.coronaaware.ui.ui.push.MySingleton;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.Response;
-import com.squareup.okhttp.ResponseBody;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -141,7 +137,7 @@ public class PatientFragment extends Fragment implements View.OnClickListener {
         String p_age = age.getText().toString().trim();
         String p_phone_number = phone_number.getText().toString().trim();
         String p_blood_grp = bloodGroup.getText().toString().trim();
-        String p_district = district.getText().toString().trim();
+        final String p_district = district.getText().toString().trim();
         String p_aad_no = aad_no.getText().toString().trim();
 
         if (uname.isEmpty() || uname.length() < 2) {
@@ -180,7 +176,7 @@ public class PatientFragment extends Fragment implements View.OnClickListener {
         patientRegisterModel.setAge(p_age);
         patientRegisterModel.setAadhaar_no(p_aad_no);
         patientRegisterModel.setContact_no("+91" + p_phone_number);
-        patientRegisterModel.setDistrict(p_district);
+        patientRegisterModel.setDistrict(p_district.trim());
         patientRegisterModel.setBloodGroup(p_blood_grp);
         patientRegisterModel.setUid(mAuth.getUid());
         patientRegisterModel.setImageId(patientImage);
@@ -196,21 +192,53 @@ public class PatientFragment extends Fragment implements View.OnClickListener {
                     System.out.println("Data could not be saved " + databaseError.getMessage());
                     Toast.makeText(getActivity(), "Data could not be saved", Toast.LENGTH_SHORT).show();
                 } else {
-                    sendNotification();
+                    getAccessToken(p_district.trim());
+                    //sendNotification();
                 }
             }
         });
 
     }
 
-    private void sendNotification() {
+    private void getAccessToken(final String district) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Mapping");
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    MappingModel mappingModel = dataSnapshot1.getValue(MappingModel.class);
+                    Log.e("Dis before", district);
+                    String dis = mappingModel.getDistrict();
+                    if (district.equals(dis)) {
+                        Log.e("Dis", mappingModel.getDistrict());
+                        Log.e("Value", mappingModel.getAccessToken());
+                        sendNotification(mappingModel.getAccessToken());
+                    } else {
+                        Log.e("Dis else", mappingModel.getDistrict());
+                        Log.e("Value else", mappingModel.getAccessToken());
+                        sendNotification(mappingModel.getAccessToken());
+                           /* progressBar.setVisibility(View.GONE);
+                            Toast.makeText(getActivity(), "Data saved successfully.", Toast.LENGTH_SHORT).show();*/
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void sendNotification(String accessToken) {
         System.out.println("Data saved successfully.");
         progressBar.setVisibility(View.GONE);
         Toast.makeText(getActivity(), "Data saved successfully.", Toast.LENGTH_SHORT).show();
         NOTIFICATION_TITLE = "TEST";
         NOTIFICATION_MESSAGE = "Success";
 
-        TOPIC = sharedpreferences.getString("AccessToken", "");
+        TOPIC = accessToken;
         JSONObject notification = new JSONObject();
         JSONObject notifcationBody = new JSONObject();
         try {
@@ -374,54 +402,4 @@ public class PatientFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private class SendNotification extends AsyncTask<JSONObject, Void, String> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-            progressDialog = ProgressDialog.show(getActivity(),
-                    "", "Please Wait!");
-
-        }
-
-        @Override
-        protected String doInBackground(JSONObject... jsonObjects) {
-            String response;
-            String accessToken = "key=AAAAKfkoTOo:APA91bExqgChh45MY6qC6VrFTClULHfKNkpKFcAHA9SdINPS3hZg0P3Gtu9VETmfpMYLTeJdPzoZ87v93NlboH1zCqAA7O6tZMoSASPvKgBPwdeXwMbG4xlRJ4mk0wPP40Oh-EnCHeY5";
-            Log.e("AccessToken", accessToken);
-            try {
-                MediaType mediaType = MediaType.parse("application/json; charset=utf-8");
-                RequestBody body = RequestBody.create(mediaType, jsonObjects.toString());
-                Request request = new Request.Builder().url("https://fcm.googleapis.com/fcm/send").addHeader("Authorization", accessToken).post(body).build();
-                OkHttpClient okHttpClient = new OkHttpClient();
-                Response response1 = okHttpClient.newCall(request).execute();
-                Log.e("response", response1.message());
-                if (!response1.isSuccessful()) {
-                    Log.e("response", String.valueOf(response1.code()));
-                    return null;
-                } else {
-                    Log.e("response", String.valueOf(response1.code()));
-                    ResponseBody resbody = response1.body();
-                    response = resbody.string();
-                    return response;
-                }
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            progressDialog.dismiss();
-            /*try {
-                JSONObject jsonObject = new JSONObject(result);
-                Log.e("Success",jsonObject.getString("success"));
-            }catch (Exception ex){
-                ex.printStackTrace();
-            }*/
-        }
-    }
 }

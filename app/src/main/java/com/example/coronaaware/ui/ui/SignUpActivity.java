@@ -24,11 +24,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.ActionCodeSettings;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 
@@ -101,48 +99,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             finish();
         }
 */
-        if (mAuth.getCurrentUser() != null) {
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
-            DatabaseReference myRef;
-            if (intentStatus.equals("doctors")) {
-                myRef = database.getReference("User");
-            } else {
-                myRef = database.getReference("Officials");
-            }
-            myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.exists()) {
-                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                            UserRegisterModel userRegisterModel = dataSnapshot1.getValue(UserRegisterModel.class);
-                            if (userRegisterModel.getUid() != null) {
-                                if (mAuth.getUid().equals(userRegisterModel.getUid())) {
-                                    editTextAddress1.setText(userRegisterModel.getAddress());
-                                    editTextAddress2.setText(userRegisterModel.getAddress2());
-                                    editTextDistrict.setText(userRegisterModel.getDistrict());
-                                    editTextEmail.setText(userRegisterModel.getEmail());
-                                    editTextMobile.setText(userRegisterModel.getMobile());
-                                    editTextOccupation.setText(userRegisterModel.getOccupation());
-                                    editTextPincode.setText(userRegisterModel.getPincode());
-                                    editTextState.setText(userRegisterModel.getState());
-                                    editTextName.setText(userRegisterModel.getName());
-                                }
-                            }
-                        }
-                    }
-
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-
-
-        }
-
-
     }
 
     private void registerUser(final String newToken) {
@@ -235,14 +191,14 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         userRegisterModel.setUid(mAuth.getUid());
         userRegisterModel.setAccessToken(newToken);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef;
+        DatabaseReference myRef1 = null;
         if (intentStatus.equals("doctors")) {
-            myRef = database.getReference("User");
+            myRef1 = database.getReference("User").child(mAuth.getUid());
         } else {
-            myRef = database.getReference("Officials");
+            myRef1 = database.getReference("Officials").child(mAuth.getUid());
         }
 
-        myRef.push().setValue(userRegisterModel, new DatabaseReference.CompletionListener() {
+        myRef1.setValue(userRegisterModel, new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
                 if (databaseError != null) {
@@ -253,9 +209,20 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                     progressBar.setVisibility(View.GONE);
                     Toast.makeText(SignUpActivity.this, "Data saved successfully.", Toast.LENGTH_SHORT).show();
                     if (intentStatus.equals("doctors")) {
+                        editTextAddress1.setText("");
+                        editTextAddress2.setText("");
+                        editTextDistrict.setText("");
+                        editTextEmail.setText("");
+                        editTextMobile.setText("");
+                        editTextOccupation.setText("");
+                        editTextPincode.setText("");
+                        editTextState.setText("");
+                        editTextName.setText("");
                         finish();
                         startActivity(new Intent(getApplicationContext(), MainActivity.class));
+
                     } else {
+                        progressBar.setVisibility(View.GONE);
                         mapping(district, newToken, name);
                     }
 
@@ -267,22 +234,32 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void mapping(String district, String newToken, String name) {
+        progressBar.setVisibility(View.VISIBLE);
         MappingModel mappingModel = new MappingModel();
         mappingModel.setAccessToken(newToken);
         mappingModel.setDistrict(district);
         mappingModel.setName(name);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("Mapping");
-        myRef.push().setValue(mappingModel, new DatabaseReference.CompletionListener() {
+        DatabaseReference myRef = database.getReference("Mapping").child(mAuth.getUid());
+        myRef.setValue(mappingModel, new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
                 if (databaseError != null) {
+                    progressBar.setVisibility(View.GONE);
                     System.out.println("Data could not be saved " + databaseError.getMessage());
                     Toast.makeText(SignUpActivity.this, "Data could not be saved", Toast.LENGTH_SHORT).show();
                 } else {
-                    System.out.println("Data saved successfully.");
                     progressBar.setVisibility(View.GONE);
-                    Toast.makeText(SignUpActivity.this, "Data saved successfully.", Toast.LENGTH_SHORT).show();
+                    editTextAddress1.setText("");
+                    editTextAddress2.setText("");
+                    editTextDistrict.setText("");
+                    editTextEmail.setText("");
+                    editTextMobile.setText("");
+                    editTextOccupation.setText("");
+                    editTextPincode.setText("");
+                    editTextState.setText("");
+                    editTextName.setText("");
+                    Toast.makeText(SignUpActivity.this, "Data mapped successfully.", Toast.LENGTH_SHORT).show();
                     finish();
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
 
