@@ -19,7 +19,11 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.ui.AboutUs"></activity>
+
+        <activity android:name=".ui.ui.AboutUs" />
+
+        <activity android:name=".ui.ui.RegisterMainActivity" />
+
         <activity
             android:name=".ui.ui.MainActivity"
             android:label="@string/title_activity_main"

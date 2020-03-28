@@ -3,6 +3,7 @@ package com.example.coronaaware.model;
 public class PatientRegisterModel {
     private String username, age, bloodGroup, district, contact_no, aadhaar_no, uid;
     private String imageId;
+    private String gender;
 
     public String getAadharImage() {
         return aadharImage;
@@ -94,5 +95,13 @@ public class PatientRegisterModel {
 
     public void setImageId(String imageId) {
         this.imageId = imageId;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 }

@@ -52,7 +52,32 @@
             android:inputType="number"
             android:textColorHint="@color/colorHint" />
 
-        <EditText
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:id="@+id/radioMale"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:checked="false"
+                    android:text="  Male"
+                    android:textSize="20dp" />
+
+                <RadioButton
+                    android:id="@+id/radioFemale"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:checked="false"
+                    android:text="   Female"
+
+                    android:textSize="20dp" />
+            </RadioGroup>
+
+            <EditText
             android:id="@+id/bloodgrp"
             android:maxLength="3"
             android:layout_width="match_parent"

@@ -155,10 +155,18 @@ public class HomeFragment extends Fragment {
         @Override
         protected String doInBackground(String... params) {
             Log.e("Code", params[0]);
-            String countryUrl = "https://coronavirus-tracker-api.herokuapp.com/v2/locations?country_code=" + params[0];
+            String code = params[0];
+            String countryUrl = null;
+            if (code.length() == 2) {
+                countryUrl = "https://coronavirus-tracker-api.herokuapp.com/v2/locations?country_code=" + code;
+            } else {
+                countryUrl = "https://coronavirus-tracker-api.herokuapp.com/v2/locations?country=" + code;
+            }
+
             String response;
 
             try {
+                Log.e("URl", countryUrl);
                 Request request = new Request.Builder().url(countryUrl).get().build();
                 OkHttpClient okHttpClient = new OkHttpClient();
                 Response response1 = okHttpClient.newCall(request).execute();
