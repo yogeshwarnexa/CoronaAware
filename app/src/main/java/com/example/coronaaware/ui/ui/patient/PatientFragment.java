@@ -18,6 +18,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -82,16 +84,23 @@ public class PatientFragment extends Fragment implements View.OnClickListener {
     String NOTIFICATION_TITLE;
     String NOTIFICATION_MESSAGE;
     String TOPIC;
+    String radioGender;
+    RadioGroup radioGroup;
+    RadioButton genderradioButton;
+    int selectedId = 0;
+    View root;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.activity_patient_register, container, false);
+        root = inflater.inflate(R.layout.activity_patient_register, container, false);
         //Firebase init
         storage = FirebaseStorage.getInstance();
         mstorageReference = storage.getReference();
         name = root.findViewById(R.id.username);
         phone_number = root.findViewById(R.id.phonenumber);
         age = root.findViewById(R.id.age);
+        radioGroup = root.findViewById(R.id.radioGroup);
+        genderradioButton = root.findViewById(selectedId);
         bloodGroup = root.findViewById(R.id.bloodgrp);
         district = root.findViewById(R.id.district);
         aad_no = root.findViewById(R.id.aad_no);
@@ -139,6 +148,8 @@ public class PatientFragment extends Fragment implements View.OnClickListener {
         String p_blood_grp = bloodGroup.getText().toString().trim();
         final String p_district = district.getText().toString().trim();
         String p_aad_no = aad_no.getText().toString().trim();
+        getRadioButtonValue();
+
 
         if (uname.isEmpty() || uname.length() < 2) {
             name.setError("UserName required");
@@ -170,6 +181,11 @@ public class PatientFragment extends Fragment implements View.OnClickListener {
             aad_no.requestFocus();
             return;
         }
+        if (radioGender.equals("") || radioGender.isEmpty()) {
+            Toast.makeText(getContext(), "Select Gender", Toast.LENGTH_SHORT).show();
+            return;
+
+        }
 
         PatientRegisterModel patientRegisterModel = new PatientRegisterModel();
         patientRegisterModel.setUsername(uname);
@@ -181,6 +197,7 @@ public class PatientFragment extends Fragment implements View.OnClickListener {
         patientRegisterModel.setUid(mAuth.getUid());
         patientRegisterModel.setImageId(patientImage);
         patientRegisterModel.setAadharImage(aadharImage);
+        patientRegisterModel.setGender(radioGender);
         progressBar.setVisibility(View.VISIBLE);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -198,6 +215,17 @@ public class PatientFragment extends Fragment implements View.OnClickListener {
             }
         });
 
+    }
+
+    private void getRadioButtonValue() {
+        int selectedId = radioGroup.getCheckedRadioButtonId();
+        genderradioButton = root.findViewById(selectedId);
+        if (selectedId == -1) {
+            Toast.makeText(getContext(), "Select a Gender", Toast.LENGTH_SHORT).show();
+        } else {
+            radioGender = genderradioButton.getText().toString().trim();
+            Log.d("Gender", radioGender);
+        }
     }
 
     private void getAccessToken(final String district) {
