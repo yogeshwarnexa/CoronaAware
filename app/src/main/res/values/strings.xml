@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Track COVID-19</string>
     <string name="quickstart_message">Click the SUBSCRIBE TO WEATHER button below to subscribe to the
         weather topic. Messages sent to the weather topic will be received. The LOG TOKEN button logs the
@@ -81,4 +81,15 @@
     <string name="ConfirmedCasesValue">Confirmed Cases</string>
     <string name="RecoveredCasesValue">Recovered Cases</string>
     <string name="DeathCasesValue">Death Cases</string>
+    <string name="tutorial_skip">Skip</string>
+    <string name="get_started_description">welocome</string>
+    <string name="poweredBy">Powered By \n Nexware Technologies</string>
+    <string name="register_here">Others Register Here</string>
+    <string name="login">Login Here</string>
+    <string name="Govt.Officials" tools:ignore="ExtraTranslation">Govt.Officials Register Here</string>
+    <string name="title_activity_bottom">BottomActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_activity_main2">Main2Activity</string>
 </resources>

@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 
+
 public class SplashActivity extends AppCompatActivity {
 
     private static final int SPLASH_DISPLAY_TIME = 2500;
@@ -58,7 +59,7 @@ public class SplashActivity extends AppCompatActivity {
                 } else {
                     Intent intent = new Intent();
                     intent.setClass(SplashActivity.this,
-                            OTPAuthentication.class);
+                            FirstWalkthroughActivity.class);
 
                     SplashActivity.this.startActivity(intent);
                     SplashActivity.this.finish();

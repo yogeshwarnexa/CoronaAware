@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+
     <application
         android:allowBackup="true"
         android:fullBackupContent="true"
@@ -19,9 +20,7 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-
         <activity android:name=".ui.ui.RegisterMainActivity" />
-
         <activity
             android:name=".ui.ui.MainActivity"
             android:label="@string/title_activity_main"
@@ -58,6 +57,12 @@
             android:name=".ui.ui.SignUpActivity"
             android:theme="@style/AppTheme" />
         <activity android:name=".ui.ui.WebViewActivity" />
+        <activity
+            android:name=".ui.ui.FirstWalkthroughActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="fullSensor"
+            android:theme="@style/NoActionBar" />
+
         <service
             android:name=".service.NotificationService"
             android:exported="false">
