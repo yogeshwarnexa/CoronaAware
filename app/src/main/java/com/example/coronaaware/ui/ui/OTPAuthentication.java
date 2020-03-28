@@ -49,6 +49,7 @@ public class OTPAuthentication extends AppCompatActivity {
         int camera = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
         int sms = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS);
         int storage = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        int call = ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE);
         List<String> listPermissionsNeeded = new ArrayList<>();
         if (camera != PackageManager.PERMISSION_GRANTED) {
             listPermissionsNeeded.add(Manifest.permission.CAMERA);
@@ -59,6 +60,10 @@ public class OTPAuthentication extends AppCompatActivity {
 
         if (storage != PackageManager.PERMISSION_GRANTED) {
             listPermissionsNeeded.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }
+
+        if (call != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.CALL_PHONE);
         }
         if (!listPermissionsNeeded.isEmpty()) {
             requestPermissions(listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]), REQUEST_ID_MULTIPLE_PERMISSIONS);
@@ -89,6 +94,12 @@ public class OTPAuthentication extends AppCompatActivity {
                     }
 
                     if (permissions[i].equals(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                        if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                            Log.e("msg", "WRITE_EXTERNAL_STORAGE granted");
+
+                        }
+                    }
+                    if (permissions[i].equals(Manifest.permission.CALL_PHONE)) {
                         if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
                             Log.e("msg", "WRITE_EXTERNAL_STORAGE granted");
 

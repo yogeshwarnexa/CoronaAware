@@ -2,6 +2,8 @@ package com.example.coronaaware.ui.ui.home;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -39,11 +41,20 @@ public class HomeFragment extends Fragment {
     String url = "https://coronavirus-tracker-api.herokuapp.com/all";
 
     ArrayList<CovidTrack> covidTrackArrayList;
+
     PieChartView pieChartView;
+
     ProgressDialog progressDialog;
+
     TextView titleConfirmed, titleRecovered, titleDeath, titleHome;
+
     EditText searchTextview;
+
     ImageView searchCountry;
+
+    public static final String MyPREFERENCES = "MyPrefs";
+    private SharedPreferences pref;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
@@ -55,6 +66,8 @@ public class HomeFragment extends Fragment {
         titleHome = root.findViewById(R.id.titleHome);
         searchTextview = root.findViewById(R.id.searchText);
         searchCountry = root.findViewById(R.id.searchCountry);
+
+        pref = getActivity().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         new GetCovid19().execute();
         searchCountry.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,6 +85,24 @@ public class HomeFragment extends Fragment {
         return root;
     }
 
+    private void setPieChart() {
+        List<SliceValue> pieData = new ArrayList<>();
+        pieData.add(new SliceValue(pref.getInt(getString(R.string.ConfirmedCasesValue), 0), Color.BLUE));
+        pieData.add(new SliceValue(pref.getInt(getString(R.string.RecoveredCasesValue), 0), Color.GREEN));
+        pieData.add(new SliceValue(pref.getInt(getString(R.string.DeathCasesValue), 0), Color.RED));
+        PieChartData pieChartData = new PieChartData(pieData);
+        pieChartData.setHasLabels(true);
+        pieChartData.setHasLabels(true).setValueLabelTextSize(15);
+        pieChartData.setHasCenterCircle(true);
+        pieChartView.setPieChartData(pieChartData);
+        titleHome.setText(pref.getString(getString(R.string.covid19TitleValue), getString(R.string.covid19TitleValue) + "World wide"));
+        titleConfirmed.setText(getString(R.string.ConfirmedCases) + ":" + pref.getInt(getString(R.string.ConfirmedCasesValue), 0));
+        titleConfirmed.setTextColor(Color.BLUE);
+        titleRecovered.setText(getString(R.string.RecoveredCases) + ":" + pref.getInt(getString(R.string.RecoveredCasesValue), 0));
+        titleRecovered.setTextColor(Color.GREEN);
+        titleDeath.setText(getString(R.string.DeathCases) + ":" + pref.getInt(getString(R.string.DeathCasesValue), 0));
+        titleDeath.setTextColor(Color.RED);
+    }
 
     @SuppressLint("StaticFieldLeak")
     private class GetCovid19 extends AsyncTask<String, Void, String> {
@@ -116,27 +147,17 @@ public class HomeFragment extends Fragment {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     JSONObject latest = jsonObject.getJSONObject("latest");
-                    List<SliceValue> pieData = new ArrayList<>();
-                    pieData.add(new SliceValue(latest.getInt("confirmed"), Color.BLUE).setLabel("confirmed : " + latest.getInt("confirmed")));
-                    pieData.add(new SliceValue(latest.getInt("recovered"), Color.GREEN).setLabel("recovered : " + latest.getInt("recovered")));
-                    pieData.add(new SliceValue(latest.getInt("deaths"), Color.RED).setLabel("deaths :" + latest.getInt("deaths")));
-                    PieChartData pieChartData = new PieChartData(pieData);
-                    pieChartData.setHasLabels(true);
-                    pieChartData.setHasLabels(true).setValueLabelTextSize(15);
-                    pieChartData.setHasCenterCircle(true).setCenterText1("COVID-19 World wide").setCenterText1FontSize(15).setCenterText1Color(Color.parseColor("#0097A7"));
-                    pieChartView.setPieChartData(pieChartData);
-                    titleHome.setText("COVID-19 World wide");
-                    titleConfirmed.setText("Confirmed : " + latest.getInt("confirmed"));
-                    titleConfirmed.setTextColor(Color.BLUE);
-                    titleRecovered.setText("Recovered : " + latest.getInt("recovered"));
-                    titleRecovered.setTextColor(Color.GREEN);
-                    titleDeath.setText("Deaths : " + latest.getInt("deaths"));
-                    titleDeath.setTextColor(Color.RED);
+                    pref.edit().putString(getString(R.string.covid19TitleValue), getString(R.string.covid19Title) + "-" + "World wide").apply();
+                    pref.edit().putInt(getString(R.string.ConfirmedCasesValue), latest.getInt("confirmed")).apply();
+                    pref.edit().putInt(getString(R.string.RecoveredCasesValue), latest.getInt("recovered")).apply();
+                    pref.edit().putInt(getString(R.string.DeathCasesValue), latest.getInt("deaths")).apply();
+                    setPieChart();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             } else {
-                Toast.makeText(getActivity(), "Network Problem", Toast.LENGTH_LONG).show();
+                setPieChart();
+
             }
         }
 
@@ -208,25 +229,14 @@ public class HomeFragment extends Fragment {
 
                     covidTrack.setCountouryName(country);
                     covidTrack.setConutryCode(countryCode);
-                    String tiltle = "COVID-19 " + country;
+                    String tiltle = getString(R.string.covid19Title) + "-" + country;
 
-                    List<SliceValue> pieData = new ArrayList<>();
-                    pieData.add(new SliceValue(latest.getInt("confirmed"), Color.BLUE).setLabel("confirmed : " + latest.getInt("confirmed")));
-                    pieData.add(new SliceValue(latest.getInt("recovered"), Color.GREEN).setLabel("recovered : " + latest.getInt("recovered")));
-                    pieData.add(new SliceValue(latest.getInt("deaths"), Color.RED).setLabel("deaths :" + latest.getInt("deaths")));
+                    pref.edit().putString(getString(R.string.covid19TitleValue), tiltle).apply();
+                    pref.edit().putInt(getString(R.string.ConfirmedCasesValue), latest.getInt("confirmed")).apply();
+                    pref.edit().putInt(getString(R.string.RecoveredCasesValue), latest.getInt("recovered")).apply();
+                    pref.edit().putInt(getString(R.string.DeathCasesValue), latest.getInt("deaths")).apply();
+                    setPieChart();
 
-                    PieChartData pieChartData = new PieChartData(pieData);
-                    pieChartData.setHasLabels(true);
-                    pieChartData.setHasLabels(true).setValueLabelTextSize(15);
-                    pieChartData.setHasCenterCircle(true).setCenterText1(tiltle).setCenterText1FontSize(15).setCenterText1Color(Color.parseColor("#0097A7"));
-                    pieChartView.setPieChartData(pieChartData);
-                    titleHome.setText(tiltle);
-                    titleConfirmed.setText("Confirmed : " + latest.getInt("confirmed"));
-                    titleConfirmed.setTextColor(Color.BLUE);
-                    titleRecovered.setText("Recovered : " + latest.getInt("recovered"));
-                    titleRecovered.setTextColor(Color.GREEN);
-                    titleDeath.setText("Deaths : " + latest.getInt("deaths"));
-                    titleDeath.setTextColor(Color.RED);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

@@ -55,32 +55,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
         mAuth = FirebaseAuth.getInstance();
 
-        /*if (mAuth.getCurrentUser() != null) {
-            patientRegisterModelArrayList = new ArrayList<>();
-
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
-            DatabaseReference myRef = database.getReference().child("PatientRegister");
-            myRef.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.exists()) {
-                        final String userName = dataSnapshot.child("username").getValue().toString();
-                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                            PatientRegisterModel patientRegisterModel = dataSnapshot1.getValue(PatientRegisterModel.class);
-                            patientRegisterModelArrayList.add(patientRegisterModel);
-                        }
-                    }
-                    Log.e("Size", String.valueOf(patientRegisterModelArrayList.size()));
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-
-
-        }*/
     }
 
     @Override
@@ -95,8 +69,10 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
 
             case R.id.Menu_AboutUs:
-                //About US
-                
+                Intent intent = new Intent(MainActivity.this, WebViewActivity.class);
+                intent.putExtra("title", "About Us");
+                intent.putExtra("url", "https://www.nexware-global.com/");
+                startActivity(intent);
                 break;
 
             case R.id.Menu_LogOutMenu:

@@ -69,4 +69,16 @@
     <string name="menu_logout">Log Out</string>
     <string name="home_second">Home Second</string>
     <string name="search_text">Search  with Country code Here</string>
+
+
+    <!--Covid-19-->
+    <string name="covid19Title">Coronavirus outbreak in </string>
+    <string name="ConfirmedCases">Confirmed Cases</string>
+    <string name="RecoveredCases">Recovered Cases</string>
+    <string name="DeathCases">Death Cases</string>
+    <!--Covid19 Values-->
+    <string name="covid19TitleValue">Coronavirus outbreak in World wide</string>
+    <string name="ConfirmedCasesValue">Confirmed Cases</string>
+    <string name="RecoveredCasesValue">Recovered Cases</string>
+    <string name="DeathCasesValue">Death Cases</string>
 </resources>

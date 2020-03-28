@@ -2,6 +2,7 @@ package com.example.coronaaware.ui.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -19,6 +20,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.concurrent.TimeUnit;
 
@@ -126,10 +132,7 @@ public class VerifyPhoneActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             //verification successful we will start the profile activity
-                            Intent intent = new Intent(VerifyPhoneActivity.this, RegisterMainActivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            startActivity(intent);
-
+                            getRegisterUser();
                         } else {
 
                             //verification unsuccessful.. display an error message
@@ -142,5 +145,57 @@ public class VerifyPhoneActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    private void getRegisterUser() {
+
+        if (mAuth.getCurrentUser() != null) {
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference myRef = database.getReference("Officials").child(mAuth.getUid());
+            myRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        Log.e("Success", mAuth.getUid());
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    } else {
+                        getRegisterUser1();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+        } else {
+            startActivity(new Intent(getApplicationContext(), SplashActivity.class));
+        }
+
+
+    }
+
+    private void getRegisterUser1() {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("User").child(mAuth.getUid());
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    Log.e("Success", mAuth.getUid());
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                } else {
+                    Intent intent = new Intent(VerifyPhoneActivity.this, RegisterMainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                
+            }
+        });
     }
 }
