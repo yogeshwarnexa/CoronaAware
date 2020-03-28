@@ -25,10 +25,6 @@ class FirstWalkthroughActivity : WalkthroughActivity() {
                     message,
                     R.drawable.covid_19_3
             ),
-            FirstWalkthroughFragment.newInstance(
-                    soundQuality,
-                    R.drawable.aadhar
-            ),
             StartFragment.newInstance()
     )
 

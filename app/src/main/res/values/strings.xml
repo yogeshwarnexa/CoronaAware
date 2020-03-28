@@ -71,7 +71,7 @@
     <string name="search_text">Search  with Country code Here</string>
 
 
-    <!--Covid-19-->
+    <!--Covid-19-->F
     <string name="covid19Title">Coronavirus outbreak in </string>
     <string name="ConfirmedCases">Confirmed Cases</string>
     <string name="RecoveredCases">Recovered Cases</string>
@@ -84,12 +84,23 @@
     <string name="tutorial_skip">Skip</string>
     <string name="get_started_description">welocome</string>
     <string name="poweredBy">Powered By \n Nexware Technologies</string>
-    <string name="register_here">Others Register Here</string>
-    <string name="login">Login Here</string>
-    <string name="Govt.Officials" tools:ignore="ExtraTranslation">Govt.Officials Register Here</string>
+    <string name="register_here">Others Register Here >>>></string>
+    <string name="login">Login Here >>></string>
+    <string name="Govt.Officials" tools:ignore="ExtraTranslation">Govt.Officials Register Here >>>></string>
     <string name="title_activity_bottom">BottomActivity</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_activity_main2">Main2Activity</string>
+    <string name="userType">user</string>
+    <string name="API">https://api.rootnet.in/covid19-in/stats/latest</string>
+
+    <!--Api-->
+    <string name="total">total</string>
+    <string name="confirmedCasesIndian">confirmedCasesIndian</string>
+    <string name="confirmedCasesForeign">confirmedCasesForeign</string>
+    <string name="discharged">discharged</string>
+    <string name="deaths">deaths</string>
+    <string name="State">State Wise Report >>></string>
+    <string name="referesh">lastRefreshed</string>
 </resources>

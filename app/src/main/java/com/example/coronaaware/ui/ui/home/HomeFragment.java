@@ -3,6 +3,7 @@ package com.example.coronaaware.ui.ui.home;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -11,8 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,7 +20,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.coronaaware.R;
-import com.example.coronaaware.model.CovidTrack;
+import com.example.coronaaware.model.CovidTrackState;
+import com.example.coronaaware.ui.ui.StateActivity;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
@@ -40,17 +41,15 @@ public class HomeFragment extends Fragment {
 
     String url = "https://coronavirus-tracker-api.herokuapp.com/all";
 
-    ArrayList<CovidTrack> covidTrackArrayList;
+    public static ArrayList<CovidTrackState> covidTrackArrayList;
 
     PieChartView pieChartView;
 
     ProgressDialog progressDialog;
 
-    TextView titleConfirmed, titleRecovered, titleDeath, titleHome;
+    TextView titleHome, titleTotal, titleConfirmedCasesIndian, titleConfirmedCasesForeign, titleDischarged, titleDeaths;
 
-    EditText searchTextview;
-
-    ImageView searchCountry;
+    Button buttonState;
 
     public static final String MyPREFERENCES = "MyPrefs";
     private SharedPreferences pref;
@@ -60,48 +59,59 @@ public class HomeFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         pieChartView = root.findViewById(R.id.chart);
         covidTrackArrayList = new ArrayList<>();
-        titleConfirmed = root.findViewById(R.id.titleConfirmed);
-        titleRecovered = root.findViewById(R.id.titleRecovered);
-        titleDeath = root.findViewById(R.id.titleDeath);
+        titleTotal = root.findViewById(R.id.titleTotal);
+        titleConfirmedCasesIndian = root.findViewById(R.id.confirmedCasesIndian);
+        titleConfirmedCasesForeign = root.findViewById(R.id.confirmedCasesForeign);
+        titleDischarged = root.findViewById(R.id.discharged);
+        titleDeaths = root.findViewById(R.id.deaths);
         titleHome = root.findViewById(R.id.titleHome);
-        searchTextview = root.findViewById(R.id.searchText);
-        searchCountry = root.findViewById(R.id.searchCountry);
+        buttonState = root.findViewById(R.id.buttonState);
 
-        pref = getActivity().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-        new GetCovid19().execute();
-        searchCountry.setOnClickListener(new View.OnClickListener() {
+        buttonState.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String countryCode = searchTextview.getText().toString();
-                if (countryCode.isEmpty()) {
-                    searchTextview.setError("Required Country code");
-                    searchTextview.requestFocus();
-                    return;
-                } else {
-                    new GetCovid19Country().execute(countryCode);
+                if (covidTrackArrayList.size() > 0) {
+                    Intent intent = new Intent(getActivity(), StateActivity.class);
+                    getActivity().startActivity(intent);
                 }
             }
         });
+
+        pref = getActivity().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        new GetCovid19Country().execute("IN");
         return root;
     }
 
     private void setPieChart() {
         List<SliceValue> pieData = new ArrayList<>();
-        pieData.add(new SliceValue(pref.getInt(getString(R.string.ConfirmedCasesValue), 0), Color.BLUE));
-        pieData.add(new SliceValue(pref.getInt(getString(R.string.RecoveredCasesValue), 0), Color.GREEN));
-        pieData.add(new SliceValue(pref.getInt(getString(R.string.DeathCasesValue), 0), Color.RED));
+        pieData.add(new SliceValue(pref.getInt(getString(R.string.total), 0), Color.BLUE));
+
+        pieData.add(new SliceValue(pref.getInt(getString(R.string.confirmedCasesIndian), 0), Color.MAGENTA));
+
+        pieData.add(new SliceValue(pref.getInt(getString(R.string.confirmedCasesForeign), 0), Color.GREEN));
+
+        pieData.add(new SliceValue(pref.getInt(getString(R.string.discharged), 0), Color.DKGRAY));
+
+        pieData.add(new SliceValue(pref.getInt(getString(R.string.deaths), 0), Color.RED));
+
         PieChartData pieChartData = new PieChartData(pieData);
         pieChartData.setHasLabels(true);
         pieChartData.setHasLabels(true).setValueLabelTextSize(15);
         pieChartData.setHasCenterCircle(true);
         pieChartView.setPieChartData(pieChartData);
-        titleHome.setText(pref.getString(getString(R.string.covid19TitleValue), getString(R.string.covid19TitleValue) + "World wide"));
-        titleConfirmed.setText(getString(R.string.ConfirmedCases) + ":" + pref.getInt(getString(R.string.ConfirmedCasesValue), 0));
-        titleConfirmed.setTextColor(Color.BLUE);
-        titleRecovered.setText(getString(R.string.RecoveredCases) + ":" + pref.getInt(getString(R.string.RecoveredCasesValue), 0));
-        titleRecovered.setTextColor(Color.GREEN);
-        titleDeath.setText(getString(R.string.DeathCases) + ":" + pref.getInt(getString(R.string.DeathCasesValue), 0));
-        titleDeath.setTextColor(Color.RED);
+        titleHome.setText("Corona virus outbreak in India");
+        titleTotal.setText("Total :" + pref.getInt(getString(R.string.total), 0));
+        titleTotal.setTextColor(Color.BLUE);
+
+        titleConfirmedCasesIndian.setText("Confirmed Cases Indian:" + pref.getInt(getString(R.string.confirmedCasesIndian), 0));
+        titleConfirmedCasesForeign.setText("Confirmed Cases Foreign:" + pref.getInt(getString(R.string.confirmedCasesForeign), 0));
+        titleConfirmedCasesForeign.setTextColor(Color.GREEN);
+
+        titleDischarged.setText("Discharged:" + pref.getInt(getString(R.string.discharged), 0));
+        titleDischarged.setTextColor(Color.DKGRAY);
+
+        titleDeaths.setText("Deaths:" + pref.getInt(getString(R.string.deaths), 0));
+        titleDeaths.setTextColor(Color.RED);
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -175,20 +185,11 @@ public class HomeFragment extends Fragment {
 
         @Override
         protected String doInBackground(String... params) {
-            Log.e("Code", params[0]);
-            String code = params[0];
-            String countryUrl = null;
-            if (code.length() == 2) {
-                countryUrl = "https://coronavirus-tracker-api.herokuapp.com/v2/locations?country_code=" + code;
-            } else {
-                countryUrl = "https://coronavirus-tracker-api.herokuapp.com/v2/locations?country=" + code;
-            }
-
             String response;
 
             try {
-                Log.e("URl", countryUrl);
-                Request request = new Request.Builder().url(countryUrl).get().build();
+                Log.e("URl", getString(R.string.API));
+                Request request = new Request.Builder().url(getString(R.string.API)).get().build();
                 OkHttpClient okHttpClient = new OkHttpClient();
                 Response response1 = okHttpClient.newCall(request).execute();
                 if (!response1.isSuccessful()) {
@@ -212,29 +213,25 @@ public class HomeFragment extends Fragment {
             if (result != null) {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
-                    JSONObject latest = jsonObject.getJSONObject("latest");
-                    CovidTrack covidTrack = new CovidTrack();
-                    covidTrack.setConfirmed(latest.getInt("confirmed"));
-                    covidTrack.setDeaths(latest.getInt("deaths"));
-                    covidTrack.setRecovered(latest.getInt("recovered"));
+                    JSONObject latest = jsonObject.getJSONObject("data");
+                    JSONObject summary = latest.getJSONObject("summary");
 
-                    JSONArray jsonArray = jsonObject.getJSONArray("locations");
-                    String country = null, countryCode = null;
+
+                    pref.edit().putString(getString(R.string.covid19TitleValue), "Covid-19 in India").apply();
+                    pref.edit().putInt(getString(R.string.total), summary.getInt("total")).apply();
+                    pref.edit().putInt(getString(R.string.confirmedCasesIndian), summary.getInt("confirmedCasesIndian")).apply();
+                    pref.edit().putInt(getString(R.string.confirmedCasesForeign), summary.getInt("confirmedCasesForeign")).apply();
+                    pref.edit().putInt(getString(R.string.discharged), summary.getInt("discharged")).apply();
+                    pref.edit().putInt(getString(R.string.deaths), summary.getInt("deaths")).apply();
+                    JSONArray jsonArray = latest.getJSONArray("regional");
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-                        country = jsonObject1.getString("country");
-                        countryCode = jsonObject1.getString("country_code");
+                        CovidTrackState covidTrackState = new CovidTrackState(jsonObject1.getString("loc"),
+                                jsonObject1.getString("confirmedCasesIndian"), jsonObject1.getString("confirmedCasesForeign"),
+                                jsonObject1.getString("discharged"), jsonObject1.getString("deaths"));
+                        covidTrackArrayList.add(covidTrackState);
+
                     }
-
-
-                    covidTrack.setCountouryName(country);
-                    covidTrack.setConutryCode(countryCode);
-                    String tiltle = getString(R.string.covid19Title) + "-" + country;
-
-                    pref.edit().putString(getString(R.string.covid19TitleValue), tiltle).apply();
-                    pref.edit().putInt(getString(R.string.ConfirmedCasesValue), latest.getInt("confirmed")).apply();
-                    pref.edit().putInt(getString(R.string.RecoveredCasesValue), latest.getInt("recovered")).apply();
-                    pref.edit().putInt(getString(R.string.DeathCasesValue), latest.getInt("deaths")).apply();
                     setPieChart();
 
                 } catch (Exception e) {
@@ -242,6 +239,7 @@ public class HomeFragment extends Fragment {
                 }
             } else {
                 Toast.makeText(getActivity(), "Network Problem", Toast.LENGTH_LONG).show();
+                setPieChart();
             }
         }
 

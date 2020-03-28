@@ -31,10 +31,11 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
+
                 <lecho.lib.hellocharts.view.PieChartView
-                    android:id="@+id/chart"
+                    android:id="@+id/StateChart"
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"
+                    android:layout_height="350dp"
                     android:layout_margin="8dp"
                     android:layout_weight="1"
                     app:layout_constraintBottom_toTopOf="@+id/relativeLayout2"
@@ -63,22 +64,7 @@
                             android:background="@color/colorBackground" />
 
                         <TextView
-                            android:id="@+id/titleHome"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:textAlignment="center"
-                            android:textColor="@color/colorHint"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/colorBackground" />
-
-                        <TextView
-                            android:id="@+id/titleTotal"
+                            android:id="@+id/titleName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
@@ -93,7 +79,7 @@
                             android:background="@color/colorBackground" />
 
                         <TextView
-                            android:id="@+id/confirmedCasesIndian"
+                            android:id="@+id/StateConfirmedCasesIndian"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
@@ -108,7 +94,7 @@
                             android:background="@color/colorBackground" />
 
                         <TextView
-                            android:id="@+id/confirmedCasesForeign"
+                            android:id="@+id/StateConfirmedCasesForeign"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
@@ -123,7 +109,7 @@
                             android:background="@color/colorBackground" />
 
                         <TextView
-                            android:id="@+id/discharged"
+                            android:id="@+id/stateDischarged"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
@@ -138,7 +124,7 @@
                             android:background="@color/colorBackground" />
 
                         <TextView
-                            android:id="@+id/deaths"
+                            android:id="@+id/stateDeaths"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
@@ -151,18 +137,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:background="@color/colorBackground" />
-
-
-                        <Button
-                            android:id="@+id/buttonState"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_margin="10dp"
-                            android:background="@drawable/rounded_button_transparent"
-                            android:text="@string/State"
-                            android:textAllCaps="false"
-                            android:textColor="@color/colorHint" />
                     </LinearLayout>
                 </RelativeLayout>
 
