@@ -132,7 +132,9 @@ public class VerifyPhoneActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             //verification successful we will start the profile activity
-                            getRegisterUser();
+                            Intent intent = new Intent(VerifyPhoneActivity.this, RegisterMainActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
                         } else {
 
                             //verification unsuccessful.. display an error message
@@ -159,6 +161,7 @@ public class VerifyPhoneActivity extends AppCompatActivity {
                         Log.e("Success", mAuth.getUid());
                         startActivity(new Intent(getApplicationContext(), MainActivity.class));
                     } else {
+                        Log.e("Else", mAuth.getUid());
                         getRegisterUser1();
                     }
                 }
@@ -186,6 +189,7 @@ public class VerifyPhoneActivity extends AppCompatActivity {
                     Log.e("Success", mAuth.getUid());
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 } else {
+                    Log.e("Else", mAuth.getUid());
                     Intent intent = new Intent(VerifyPhoneActivity.this, RegisterMainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
