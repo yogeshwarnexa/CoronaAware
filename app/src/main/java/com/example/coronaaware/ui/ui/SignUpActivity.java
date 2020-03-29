@@ -46,7 +46,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     String email_link, pending_email;
     String adminEmail = "ityogesh5@gmail.com";
     String TAG = "EMAIL_AUTH";
-    private SharedPreferences pref;
     String intentStatus;
 
 
@@ -238,6 +237,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         if (intentStatus.equals("doctors")) {
             myRef1 = database.getReference("User").child(mAuth.getUid());
         } else {
+            sharedpreferences.edit().putString(getString(R.string.districtValue), district).apply();
             myRef1 = database.getReference("Officials").child(mAuth.getUid());
         }
 
@@ -342,7 +342,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     private void sendVerificationMail(final String email) {
         //Save Email Address using SharedPreference Editor.
-        SharedPreferences.Editor editor = pref.edit();
+        SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putString(KEY_PENDING_EMAIL, email);
         editor.apply();
         Log.d(TAG, "Email sending...");

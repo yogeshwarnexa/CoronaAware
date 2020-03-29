@@ -1,7 +1,9 @@
 package com.example.coronaaware.ui.ui.reports;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,10 +25,17 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.coronaaware.R;
 import com.example.coronaaware.model.PatientRegisterModel;
+import com.example.coronaaware.ui.ui.adapter.ReportAdaper;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 
 public class ReportsFragment extends Fragment {
@@ -34,7 +44,11 @@ public class ReportsFragment extends Fragment {
     private View root;
     private RecyclerView recyclerView;
     ProgressDialog progressDialog;
+    public static final String MyPREFERENCES = "MyPrefs";
+    SharedPreferences sharedpreferences;
+    ArrayList<PatientRegisterModel> patientRegisterModelArrayList;
 
+    ReportAdaper reportAdaper;
     public ReportsFragment() {
 
     }
@@ -48,9 +62,9 @@ public class ReportsFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_reports, container, false);
         firebaseDatabase = FirebaseDatabase.getInstance();
-        reference = firebaseDatabase.getReference("PatientRegister");
+        patientRegisterModelArrayList = new ArrayList<>();
         recyclerView = root.findViewById(R.id.recyclerview);
-
+        sharedpreferences = getActivity().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
@@ -59,12 +73,43 @@ public class ReportsFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
         progressDialog = ProgressDialog.show(getActivity(),
                 "", "Please Wait!");
-        showList();
+        getList();
 
         return root;
     }
 
+    private void getList() {
+        final String value = sharedpreferences.getString(getString(R.string.districtValue), "coimbatore").trim();
+        reference = firebaseDatabase.getReference("PatientRegister");
+        Query mQuery = reference.orderByChild("district").equalTo(value);
+        mQuery.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                        PatientRegisterModel patientRegisterModel = dataSnapshot1.getValue(PatientRegisterModel.class);
+                        patientRegisterModelArrayList.add(patientRegisterModel);
+                    }
+                    progressDialog.dismiss();
+                    reportAdaper = new ReportAdaper(patientRegisterModelArrayList, getActivity());
+                    recyclerView.setAdapter(reportAdaper);
+                } else {
+                    progressDialog.dismiss();
+                    Toast.makeText(getActivity(), "Data is not exists", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                progressDialog.dismiss();
+                Log.e("Error", databaseError.getMessage());
+            }
+        });
+    }
+
     private void showList() {
+        final String value = sharedpreferences.getString(getString(R.string.districtValue), "coimbatore").trim();
+        Query mQuery = reference.orderByChild("district").equalTo(value);
 
         FirebaseRecyclerOptions options =
                 new FirebaseRecyclerOptions.Builder<PatientRegisterModel>().
@@ -75,6 +120,7 @@ public class ReportsFragment extends Fragment {
                     @Override
                     protected void onBindViewHolder(@NonNull final UserViewHolder holder, int position, @NonNull final PatientRegisterModel model) {
                         progressDialog.dismiss();
+
                         holder.userName.setText("Name : " + model.getUsername());
                         holder.age.setText("Age : " + model.getAge());
                         holder.mobile.setText("Mobile No : " + model.getContact_no());
@@ -101,6 +147,7 @@ public class ReportsFragment extends Fragment {
                                     .load(model.getImageId())
                                     .apply(options)
                                     .into(holder.imageView);
+
                         } else if (!model.getAadharImage().equals("empty")) {
                             Glide.with(getContext())
                                     .load(model.getAadharImage())
