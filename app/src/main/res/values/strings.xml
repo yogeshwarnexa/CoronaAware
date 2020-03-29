@@ -67,6 +67,7 @@
     <string name="menu_gallery">Reports</string>
     <string name="menu_slideshow">Patient Register</string>
     <string name="menu_logout">Log Out</string>
+    <string name="menu_notifications">Notifications</string>
     <string name="home_second">Home Second</string>
     <string name="search_text">Search  with Country code Here</string>
 

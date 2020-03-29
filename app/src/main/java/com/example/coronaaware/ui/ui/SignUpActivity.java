@@ -261,9 +261,15 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                         editTextPincode.setText("");
                         editTextState.setText("");
                         editTextName.setText("");
+                        String userState = sharedpreferences.getString(getString(R.string.userType), "");
+                        if (userState.equals("user")) {
+                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        } else if (userState.equals("officals")) {
+                            startActivity(new Intent(getApplicationContext(), OfficalsMainActivity.class));
+                        } else if (userState.equals("admin")) {
+                            Log.e("Admin", "Login");
+                        }
                         finish();
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-
                     } else {
                         progressBar.setVisibility(View.GONE);
                         mapping(district, newToken, name);
@@ -303,8 +309,14 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                     editTextState.setText("");
                     editTextName.setText("");
                     Toast.makeText(SignUpActivity.this, "Data mapped successfully.", Toast.LENGTH_SHORT).show();
-                    finish();
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    String userState = sharedpreferences.getString(getString(R.string.userType), "");
+                    if (userState.equals("user")) {
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    } else if (userState.equals("officals")) {
+                        startActivity(new Intent(getApplicationContext(), OfficalsMainActivity.class));
+                    } else if (userState.equals("admin")) {
+                        Log.e("Admin", "Login");
+                    }
 
 
                 }
