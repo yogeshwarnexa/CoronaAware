@@ -67,6 +67,7 @@
     <string name="menu_gallery">Reports</string>
     <string name="menu_slideshow">Patient Register</string>
     <string name="menu_logout">Log Out</string>
+    <string name="menu_notifications">Notifications</string>
     <string name="home_second">Home Second</string>
     <string name="search_text">Search  with Country code Here</string>
 
@@ -105,4 +106,7 @@
     <string name="referesh">lastRefreshed</string>
     <string name="infoText">Time of fight this together!</string>
     <string name="toutorial">toutorial</string>
+    <string name="districtValue">districtValue</string>
+    <string name="update">Update</string>
+    <string name="User_info">Your info</string>
 </resources>

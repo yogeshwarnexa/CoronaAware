@@ -41,6 +41,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
@@ -52,6 +53,7 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -231,25 +233,16 @@ public class PatientFragment extends Fragment implements View.OnClickListener {
     private void getAccessToken(final String district) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("Mapping");
-        myRef.addValueEventListener(new ValueEventListener() {
+        Query mQuery = myRef.orderByChild("district").equalTo(district);
+        mQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ArrayList<String> accessToken = new ArrayList<>();
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     MappingModel mappingModel = dataSnapshot1.getValue(MappingModel.class);
-                    Log.e("Dis before", district);
-                    String dis = mappingModel.getDistrict();
-                    if (district.equals(dis)) {
-                        Log.e("Dis", mappingModel.getDistrict());
-                        Log.e("Value", mappingModel.getAccessToken());
-                        sendNotification(mappingModel.getAccessToken());
-                    } else {
-                        Log.e("Dis else", mappingModel.getDistrict());
-                        Log.e("Value else", mappingModel.getAccessToken());
-                        sendNotification(mappingModel.getAccessToken());
-                           /* progressBar.setVisibility(View.GONE);
-                            Toast.makeText(getActivity(), "Data saved successfully.", Toast.LENGTH_SHORT).show();*/
-                    }
+                    accessToken.add(mappingModel.getAccessToken());
                 }
+                sendNotification(accessToken.get(0));
             }
 
             @Override

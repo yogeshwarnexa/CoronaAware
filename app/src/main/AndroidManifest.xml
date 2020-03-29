@@ -63,6 +63,9 @@
             android:name=".ui.ui.WebViewActivity"
             android:theme="@style/AppTheme" />
         <activity
+            android:name=".ui.ui.UserActivity"
+            android:theme="@style/AppTheme" />
+        <activity
             android:name=".ui.ui.FirstWalkthroughActivity"
             android:launchMode="singleTask"
             android:screenOrientation="fullSensor"
@@ -70,7 +73,9 @@
         <activity
             android:name=".ui.ui.MainActivity"
             android:theme="@style/AppTheme" />
-
+        <activity
+            android:name=".ui.ui.OfficalsMainActivity"
+            android:theme="@style/AppTheme" />
         <service
             android:name=".service.NotificationService"
             android:exported="false">

@@ -32,31 +32,30 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 
-public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
+public class UserActivity extends AppCompatActivity implements View.OnClickListener {
 
-    ProgressBar progressBar;
-    EditText editTextEmail, editTextName, editTextMobile, editTextAddress1, editTextAddress2, editTextOccupation, editTextDistrict, editTextState, editTextPincode;
-    private FirebaseAuth mAuth;
     public static final String MyPREFERENCES = "MyPrefs";
     public static final String Name = "userName";
     public static final String dr_district = "district";
-    SharedPreferences sharedpreferences;
     private static final String KEY_PENDING_EMAIL = "key_pending_email";
+    ProgressBar progressBar;
+    EditText editTextEmail, editTextName, editTextMobile, editTextAddress1, editTextAddress2, editTextOccupation, editTextDistrict, editTextState, editTextPincode;
+    SharedPreferences sharedpreferences;
     String email = "ityogesh5@gmail.com";
     String email_link, pending_email;
     String adminEmail = "ityogesh5@gmail.com";
     String TAG = "EMAIL_AUTH";
     String intentStatus;
-
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up);
+        setContentView(R.layout.activity_user);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle(R.string.registration);
+            actionBar.setTitle(R.string.User_info);
         }
         Intent intent = getIntent();
         intentStatus = intent.getStringExtra("value");
@@ -246,11 +245,11 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             public void onComplete(DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
                 if (databaseError != null) {
                     System.out.println("Data could not be saved " + databaseError.getMessage());
-                    Toast.makeText(SignUpActivity.this, "Data could not be saved", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UserActivity.this, "Data could not be saved", Toast.LENGTH_SHORT).show();
                 } else {
                     System.out.println("Data saved successfully.");
                     progressBar.setVisibility(View.GONE);
-                    Toast.makeText(SignUpActivity.this, "Data saved successfully.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UserActivity.this, "Data saved successfully.", Toast.LENGTH_SHORT).show();
                     if (intentStatus.equals("doctors")) {
                         editTextAddress1.setText("");
                         editTextAddress2.setText("");
@@ -296,7 +295,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 if (databaseError != null) {
                     progressBar.setVisibility(View.GONE);
                     System.out.println("Data could not be saved " + databaseError.getMessage());
-                    Toast.makeText(SignUpActivity.this, "Data could not be saved", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UserActivity.this, "Data could not be saved", Toast.LENGTH_SHORT).show();
                 } else {
                     progressBar.setVisibility(View.GONE);
                     editTextAddress1.setText("");
@@ -308,7 +307,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                     editTextPincode.setText("");
                     editTextState.setText("");
                     editTextName.setText("");
-                    Toast.makeText(SignUpActivity.this, "Data mapped successfully.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UserActivity.this, "Data mapped successfully.", Toast.LENGTH_SHORT).show();
                     String userState = sharedpreferences.getString(getString(R.string.userType), "");
                     if (userState.equals("user")) {
                         startActivity(new Intent(getApplicationContext(), MainActivity.class));
@@ -378,4 +377,18 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
 
     }
+
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        super.onBackPressed();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return super.onSupportNavigateUp();
+    }
+
 }

@@ -50,12 +50,26 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 if (mAuth.getCurrentUser() != null) {
-                    Intent intent = new Intent();
-                    intent.setClass(SplashActivity.this,
-                            MainActivity.class);
+                    String userState = sharedpreferences.getString(getString(R.string.userType), "");
+                    Log.e("User", userState);
+                    if (userState.equals("user")) {
+                        Intent intent = new Intent();
+                        intent.setClass(SplashActivity.this,
+                                MainActivity.class);
 
-                    SplashActivity.this.startActivity(intent);
-                    SplashActivity.this.finish();
+                        SplashActivity.this.startActivity(intent);
+                        SplashActivity.this.finish();
+                    } else if (userState.equals("officals")) {
+                        Intent intent = new Intent();
+                        intent.setClass(SplashActivity.this,
+                                OfficalsMainActivity.class);
+
+                        SplashActivity.this.startActivity(intent);
+                        SplashActivity.this.finish();
+                    } else if (userState.equals("admin")) {
+                        Log.e("Admin", "Login");
+                    }
+
                 } else {
                     boolean toutorial = sharedpreferences.getBoolean(getString(R.string.toutorial), false);
                     if (!toutorial) {
