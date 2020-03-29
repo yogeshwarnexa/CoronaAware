@@ -270,8 +270,8 @@ public class PatientFragment extends Fragment implements View.OnClickListener {
         JSONObject notification = new JSONObject();
         JSONObject notifcationBody = new JSONObject();
         try {
-            notifcationBody.put("title", "COVID-19 Update");
-            notifcationBody.put("body", "See Reports");
+            notifcationBody.put("title", "New Patient in your area");
+            notifcationBody.put("body", "Covid-19 update");
             notifcationBody.put("mutable_content", true);
             notifcationBody.put("sound", "Tri-tone");
 // "title": "Check this Mobile (title) success",
@@ -369,21 +369,36 @@ public class PatientFragment extends Fragment implements View.OnClickListener {
             progress.setTitle("Uploading....");
             progress.show();
 
-            StorageReference ref = mstorageReference.child(aadar + "/" + UUID.randomUUID().toString());
+            final StorageReference ref = mstorageReference.child(aadar + "/" + UUID.randomUUID().toString());
             ref.putFile(filePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     progress.dismiss();
                     Toast.makeText(getActivity(), "Uploaded successfully", Toast.LENGTH_SHORT).show();
-                    String imageUrl = taskSnapshot.getUploadSessionUri().toString();
-                    if (aadar.equals("AADHAR")) {
-                        aadharImage = "";
-                        aadharImage = imageUrl;
-                    } else {
-                        patientImage = "";
-                        patientImage = imageUrl;
-                    }
-                    Log.e("URI", imageUrl);
+                    ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            Uri downloadUrl = uri;
+                            if (aadar.equals("AADHAR")) {
+                                if (downloadUrl.isAbsolute()) {
+                                    aadharImage = "";
+                                    aadharImage = downloadUrl.toString();
+                                } else {
+                                    aadharImage = "empty";
+                                }
+
+                            } else {
+                                if (downloadUrl.isAbsolute()) {
+                                    patientImage = "";
+                                    patientImage = downloadUrl.toString();
+                                } else {
+                                    patientImage = "empty";
+                                }
+                            }
+                            Log.e("URI", downloadUrl.toString());
+                        }
+                    });
+
                     //Picasso.with(getBaseContext()).load(imageUrl).into(imgFirebase);
                 }
             }).addOnFailureListener(new OnFailureListener() {

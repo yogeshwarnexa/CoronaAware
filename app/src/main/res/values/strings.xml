@@ -30,7 +30,7 @@
     <string name="firebase_confirmpassword" translatable="false">Confirm Password</string>
     <string name="firebase_emailrequired" translatable="false">Email is required</string>
     <string name="firebase_namerequired" translatable="false">Name is required</string>
-    <string name="firebase_mobolerequired" translatable="false">Name is required</string>
+    <string name="firebase_mobolerequired" translatable="false">Mobile No is required</string>
     <string name="firebase_Addressrequired" translatable="false">Address is required</string>
     <string name="firebase_occupation_required" translatable="false">Occupation is required</string>
     <string name="firebase_emailValidation" translatable="false">Please enter a valid email</string>
@@ -103,4 +103,6 @@
     <string name="deaths">deaths</string>
     <string name="State">State Wise Report >>></string>
     <string name="referesh">lastRefreshed</string>
+    <string name="infoText">Time of fight this together!</string>
+    <string name="toutorial">toutorial</string>
 </resources>

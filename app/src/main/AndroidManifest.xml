@@ -13,8 +13,9 @@
     <application
         android:allowBackup="true"
         android:fullBackupContent="true"
-        android:icon="@drawable/save"
+        android:icon="@drawable/covid_lanucher"
         android:label="@string/app_name"
+        android:testOnly="true"
         android:roundIcon="@drawable/covid_lanucher"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"

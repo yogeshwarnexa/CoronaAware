@@ -10,7 +10,6 @@ class FirstWalkthroughActivity : WalkthroughActivity() {
     val hello = "Hello"
     val schedule = "Hello1"
     val message = "Hello2"
-    val soundQuality = "Hello3"
 
     override val pages = listOf(
             FirstWalkthroughFragment.newInstance(
