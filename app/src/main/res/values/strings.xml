@@ -107,4 +107,6 @@
     <string name="infoText">Time of fight this together!</string>
     <string name="toutorial">toutorial</string>
     <string name="districtValue">districtValue</string>
+    <string name="update">Update</string>
+    <string name="User_info">Your info</string>
 </resources>

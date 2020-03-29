@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:orientation="vertical"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
+
+                <EditText
+                    android:id="@+id/editTextName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:fontFamily="sans-serif"
+                    android:hint="@string/name"
+                    android:inputType="textPersonName"
+                    android:paddingBottom="15dp"
+                    android:textColorHint="@color/colorHint" />
+
+                <EditText
+                    android:id="@+id/editTextMobile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:fontFamily="sans-serif"
+                    android:hint="@string/mobile"
+                    android:inputType="phone"
+                    android:maxLength="13"
+                    android:paddingBottom="15dp"
+                    android:textColorHint="@color/colorHint" />
+
+                <EditText
+                    android:id="@+id/editTextEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:fontFamily="sans-serif"
+                    android:hint="@string/firebase_username"
+                    android:inputType="textEmailAddress"
+                    android:paddingBottom="15dp"
+                    android:textColorHint="@color/colorHint" />
+
+                <EditText
+                    android:id="@+id/editTextOccupation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:fontFamily="sans-serif"
+                    android:hint="@string/occupation"
+                    android:inputType="textPersonName"
+                    android:paddingBottom="15dp"
+                    android:textColorHint="@color/colorHint" />
+
+                <EditText
+                    android:id="@+id/editTextAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:fontFamily="sans-serif"
+                    android:hint="@string/Address"
+                    android:inputType="textPostalAddress"
+                    android:maxLines="5"
+                    android:paddingBottom="15dp"
+                    android:textColorHint="@color/colorHint" />
+
+                <EditText
+                    android:id="@+id/editTextAddress2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:fontFamily="sans-serif"
+                    android:hint="@string/Address2"
+                    android:inputType="textPostalAddress"
+                    android:paddingBottom="15dp"
+                    android:textColorHint="@color/colorHint" />
+
+                <EditText
+                    android:id="@+id/editTextDistrict"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:fontFamily="sans-serif"
+                    android:hint="@string/district"
+                    android:inputType="textPostalAddress"
+                    android:paddingBottom="15dp"
+                    android:textColorHint="@color/colorHint" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/editTextState"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_weight="0.8"
+                        android:fontFamily="sans-serif"
+                        android:hint="@string/state"
+                        android:inputType="textPostalAddress"
+                        android:paddingBottom="15dp"
+                        android:textColorHint="@color/colorHint" />
+
+                    <EditText
+                        android:id="@+id/editTextPincode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1.3"
+                        android:fontFamily="sans-serif"
+                        android:hint="@string/pincode"
+                        android:inputType="number"
+                        android:maxLength="6"
+                        android:paddingBottom="15dp"
+                        android:textColorHint="@color/colorHint" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/buttonSignUp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/rounded_button_transparent"
+                    android:text="@string/update"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorHint" />
+
+
+            </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/progressbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -71,6 +71,13 @@ public class OfficalsMainActivity extends AppCompatActivity {
                 finish();
                 startActivity(new Intent(getApplicationContext(), OTPAuthentication.class));
                 break;
+
+            case R.id.Menu_AboutUser:
+                //Do Logout
+                Intent intent1 = new Intent(OfficalsMainActivity.this, UserActivity.class);
+                intent1.putExtra("value", "officials");
+                startActivity(intent1);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

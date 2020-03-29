@@ -28,6 +28,7 @@ import com.example.coronaaware.model.PatientRegisterModel;
 import com.example.coronaaware.ui.ui.adapter.ReportAdaper;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -49,6 +50,8 @@ public class ReportsFragment extends Fragment {
     ArrayList<PatientRegisterModel> patientRegisterModelArrayList;
 
     ReportAdaper reportAdaper;
+    FirebaseAuth mAuth;
+
     public ReportsFragment() {
 
     }
@@ -61,6 +64,7 @@ public class ReportsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_reports, container, false);
+        mAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
         patientRegisterModelArrayList = new ArrayList<>();
         recyclerView = root.findViewById(R.id.recyclerview);
@@ -73,15 +77,29 @@ public class ReportsFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
         progressDialog = ProgressDialog.show(getActivity(),
                 "", "Please Wait!");
-        getList();
+
+        String userState = sharedpreferences.getString(getString(R.string.userType), "");
+        if (userState.equals("user")) {
+            getList(mAuth.getUid(), "User");
+        } else if (userState.equals("officals")) {
+            String value = sharedpreferences.getString(getString(R.string.districtValue), "coimbatore").trim();
+            getList(value, "officals");
+        } else if (userState.equals("admin")) {
+            Log.e("Admin", "Login");
+        }
+
 
         return root;
     }
 
-    private void getList() {
-        final String value = sharedpreferences.getString(getString(R.string.districtValue), "coimbatore").trim();
+    private void getList(String value, String title) {
         reference = firebaseDatabase.getReference("PatientRegister");
-        Query mQuery = reference.orderByChild("district").equalTo(value);
+        Query mQuery;
+        if (title.equals("User")) {
+            mQuery = reference.orderByChild("uid").equalTo(value);
+        } else {
+            mQuery = reference.orderByChild("district").equalTo(value);
+        }
         mQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

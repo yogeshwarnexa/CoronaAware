@@ -65,6 +65,12 @@ public class MainActivity extends AppCompatActivity {
                 finish();
                 startActivity(new Intent(getApplicationContext(), OTPAuthentication.class));
                 break;
+            case R.id.Menu_AboutUser:
+                //Do Logout
+                Intent intent1 = new Intent(MainActivity.this, UserActivity.class);
+                intent1.putExtra("value", "doctors");
+                startActivity(intent1);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
