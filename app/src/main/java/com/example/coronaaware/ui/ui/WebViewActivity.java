@@ -1,6 +1,5 @@
 package com.example.coronaaware.ui.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -44,13 +43,15 @@ public class WebViewActivity extends AppCompatActivity {
     }
 
 
+    @Override
     public void onBackPressed() {
+        finish();
+    }
 
-        Intent intent = new Intent(WebViewActivity.this,
-                MainActivity.class);
-        startActivity(intent);
-
-        return;
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return super.onSupportNavigateUp();
     }
 
 

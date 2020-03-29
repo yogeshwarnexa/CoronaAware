@@ -31,29 +31,6 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:weightSum="2">
-
-                    <EditText
-                        android:id="@+id/searchText"
-                        android:layout_width="331dp"
-                        android:layout_height="50dp"
-                        android:layout_margin="10dp"
-                        android:layout_weight="0.8"
-                        android:hint="@string/search_text" />
-
-                    <ImageView
-                        android:id="@+id/searchCountry"
-                        android:layout_width="50dp"
-                        android:layout_height="match_parent"
-                        android:layout_margin="5dp"
-                        android:layout_weight="1.2"
-                        android:src="@drawable/search" />
-                </LinearLayout>
-
                 <lecho.lib.hellocharts.view.PieChartView
                     android:id="@+id/chart"
                     android:layout_width="match_parent"
@@ -101,7 +78,7 @@
                             android:background="@color/colorBackground" />
 
                         <TextView
-                            android:id="@+id/titleConfirmed"
+                            android:id="@+id/titleTotal"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
@@ -116,7 +93,7 @@
                             android:background="@color/colorBackground" />
 
                         <TextView
-                            android:id="@+id/titleRecovered"
+                            android:id="@+id/confirmedCasesIndian"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
@@ -131,7 +108,7 @@
                             android:background="@color/colorBackground" />
 
                         <TextView
-                            android:id="@+id/titleDeath"
+                            android:id="@+id/confirmedCasesForeign"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
@@ -144,6 +121,48 @@
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:background="@color/colorBackground" />
+
+                        <TextView
+                            android:id="@+id/discharged"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:textAlignment="center"
+                            android:textColor="@color/colorHint"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/colorBackground" />
+
+                        <TextView
+                            android:id="@+id/deaths"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:textAlignment="center"
+                            android:textColor="@color/colorHint"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/colorBackground" />
+
+
+                        <Button
+                            android:id="@+id/buttonState"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_margin="10dp"
+                            android:background="@drawable/rounded_button_transparent"
+                            android:text="@string/State"
+                            android:textAllCaps="false"
+                            android:textColor="@color/colorHint" />
                     </LinearLayout>
                 </RelativeLayout>
 

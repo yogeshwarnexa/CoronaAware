@@ -24,9 +24,11 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.ActionCodeSettings;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 
@@ -46,6 +48,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     String TAG = "EMAIL_AUTH";
     private SharedPreferences pref;
     String intentStatus;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,8 +81,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         findViewById(R.id.buttonSignUp).setOnClickListener(this);
 
         //Reading preferences if it?s already been set
-        pref = getApplicationContext().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
-        pending_email = pref.getString(KEY_PENDING_EMAIL, null);
+        pending_email = sharedpreferences.getString(KEY_PENDING_EMAIL, null);
 
         //Checking for pending email?.
         if (pending_email != null) {
@@ -87,6 +89,18 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             Log.d(TAG, "Getting Shared Preferences" + pending_email);
         }
 
+        if (mAuth.getCurrentUser() != null) {
+            String userState = sharedpreferences.getString(getString(R.string.userType), "");
+            if (userState.equals("user")) {
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference myRef = database.getReference("User").child(mAuth.getUid());
+                getDatainfo(myRef);
+            } else {
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference myRef = database.getReference("Officials").child(mAuth.getUid());
+                getDatainfo(myRef);
+            }
+        }
         //Creating intent for catching the link
         /*Intent intent = getIntent();
         if (intent != null && intent.getData() != null) {
@@ -99,6 +113,35 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             finish();
         }
 */
+    }
+
+    private void getDatainfo(DatabaseReference myRef) {
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    UserRegisterModel userRegisterModel = dataSnapshot.getValue(UserRegisterModel.class);
+                    editTextAddress1.setText(userRegisterModel.getAddress());
+                    editTextAddress2.setText(userRegisterModel.getAddress2());
+                    editTextDistrict.setText(userRegisterModel.getDistrict());
+                    editTextEmail.setText(userRegisterModel.getEmail());
+                    editTextMobile.setText(userRegisterModel.getMobile());
+                    editTextOccupation.setText(userRegisterModel.getOccupation());
+                    editTextPincode.setText(userRegisterModel.getPincode());
+                    editTextState.setText(userRegisterModel.getState());
+                    editTextName.setText(userRegisterModel.getName());
+                } else {
+                    Log.e("Data not exitst", "Failed");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
     }
 
     private void registerUser(final String newToken) {
@@ -180,7 +223,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
         UserRegisterModel userRegisterModel = new UserRegisterModel();
         userRegisterModel.setName(name);
-        userRegisterModel.setMobile("+91" + mobile);
+        userRegisterModel.setMobile(mobile);
         userRegisterModel.setAddress(address);
         userRegisterModel.setAddress2(address2);
         userRegisterModel.setEmail(email);
