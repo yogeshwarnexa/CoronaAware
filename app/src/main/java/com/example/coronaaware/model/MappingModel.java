@@ -3,6 +3,17 @@ package com.example.coronaaware.model;
 public class MappingModel {
     String district, accessToken, name;
 
+    boolean status;
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+
     public String getDistrict() {
         return district;
     }

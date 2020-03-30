@@ -39,7 +39,6 @@ public class RegisterMainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 pref.edit().putString(getString(R.string.userType), "officals").apply();
-                pref.edit().putString(getString(R.string.userType), "officals").apply();
                 Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
                 intent.putExtra("value", "officials");
                 startActivity(intent);

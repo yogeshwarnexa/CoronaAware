@@ -104,6 +104,8 @@ public class HomeFragment extends Fragment {
         titleTotal.setTextColor(Color.BLUE);
 
         titleConfirmedCasesIndian.setText("Confirmed Cases Indian:" + pref.getInt(getString(R.string.confirmedCasesIndian), 0));
+        titleConfirmedCasesIndian.setTextColor(Color.MAGENTA);
+
         titleConfirmedCasesForeign.setText("Confirmed Cases Foreign:" + pref.getInt(getString(R.string.confirmedCasesForeign), 0));
         titleConfirmedCasesForeign.setTextColor(Color.GREEN);
 

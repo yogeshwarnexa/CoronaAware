@@ -1,6 +1,8 @@
 package com.example.coronaaware.ui.ui;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -39,6 +41,11 @@ public class VerifyPhoneActivity extends AppCompatActivity {
 
     //firebase auth object
     private FirebaseAuth mAuth;
+
+    public static final String MyPREFERENCES = "MyPrefs";
+    String mobile;
+    private SharedPreferences pref;
+
     //the callback to detect the verification status
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
         @Override
@@ -79,12 +86,12 @@ public class VerifyPhoneActivity extends AppCompatActivity {
         //initializing objects
         mAuth = FirebaseAuth.getInstance();
         editTextCode = findViewById(R.id.editTextCode);
-
+        pref = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
         //getting mobile number from the previous activity
         //and sending the verification code to the number
         Intent intent = getIntent();
-        String mobile = intent.getStringExtra("mobile");
+        mobile = intent.getStringExtra("mobile");
         sendVerificationCode(mobile);
 
         //if the automatic sms detection did not work, user can also enter the code manually
@@ -132,9 +139,15 @@ public class VerifyPhoneActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             //verification successful we will start the profile activity
-                            Intent intent = new Intent(VerifyPhoneActivity.this, RegisterMainActivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            startActivity(intent);
+                            if (mobile.equals("9874561230")) {
+                                pref.edit().putString(getString(R.string.userType), "admin").apply();
+                                Intent intent = new Intent(VerifyPhoneActivity.this, AdminMainActivity.class);
+                                startActivity(intent);
+                            } else {
+                                Intent intent = new Intent(VerifyPhoneActivity.this, RegisterMainActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
+                            }
                         } else {
 
                             //verification unsuccessful.. display an error message

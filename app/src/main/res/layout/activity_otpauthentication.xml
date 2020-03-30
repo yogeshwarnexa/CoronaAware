@@ -56,7 +56,7 @@
             android:drawablePadding="10dp"
             android:hint="enter your mobile number"
             android:inputType="phone"
-            android:maxLength="13" />
+            android:maxLength="10" />
 
         <Button
             android:id="@+id/buttonContinue"

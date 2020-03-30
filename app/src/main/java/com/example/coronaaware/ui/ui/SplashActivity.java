@@ -56,18 +56,20 @@ public class SplashActivity extends AppCompatActivity {
                         Intent intent = new Intent();
                         intent.setClass(SplashActivity.this,
                                 MainActivity.class);
-
                         SplashActivity.this.startActivity(intent);
                         SplashActivity.this.finish();
                     } else if (userState.equals("officals")) {
                         Intent intent = new Intent();
                         intent.setClass(SplashActivity.this,
                                 OfficalsMainActivity.class);
-
                         SplashActivity.this.startActivity(intent);
                         SplashActivity.this.finish();
                     } else if (userState.equals("admin")) {
-                        Log.e("Admin", "Login");
+                        Intent intent = new Intent();
+                        intent.setClass(SplashActivity.this,
+                                AdminMainActivity.class);
+                        SplashActivity.this.startActivity(intent);
+                        SplashActivity.this.finish();
                     }
 
                 } else {

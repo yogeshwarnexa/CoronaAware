@@ -242,9 +242,10 @@ public class PatientFragment extends Fragment implements View.OnClickListener {
                     MappingModel mappingModel = dataSnapshot1.getValue(MappingModel.class);
                     accessToken.add(mappingModel.getAccessToken());
                 }
-                sendNotification(accessToken.get(0));
+                if (accessToken.size() > 0) {
+                    sendNotification(accessToken.get(0));
+                }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 

@@ -232,6 +232,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         userRegisterModel.setPincode(pincode);
         userRegisterModel.setUid(mAuth.getUid());
         userRegisterModel.setAccessToken(newToken);
+        userRegisterModel.setStatus(false);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef1 = null;
         if (intentStatus.equals("doctors")) {
@@ -288,6 +289,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         mappingModel.setAccessToken(newToken);
         mappingModel.setDistrict(district);
         mappingModel.setName(name);
+        mappingModel.setStatus(false);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("Mapping").child(mAuth.getUid());
         myRef.setValue(mappingModel, new DatabaseReference.CompletionListener() {
@@ -315,7 +317,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                     } else if (userState.equals("officals")) {
                         startActivity(new Intent(getApplicationContext(), OfficalsMainActivity.class));
                     } else if (userState.equals("admin")) {
-                        Log.e("Admin", "Login");
+                        startActivity(new Intent(getApplicationContext(), AdminMainActivity.class));
                     }
 
 
