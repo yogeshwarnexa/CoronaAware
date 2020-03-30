@@ -17,11 +17,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.coronaaware.R;
 import com.example.coronaaware.model.CovidTrackState;
-import com.example.coronaaware.ui.ui.StateActivity;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
@@ -80,6 +80,13 @@ public class HomeFragment extends Fragment {
         pref = getActivity().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         new GetCovid19Country().execute("IN");
         return root;
+    }
+
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
     }
 
     private void setPieChart() {

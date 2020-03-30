@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.coronaaware.R;
 import com.example.coronaaware.model.CovidTrackState;
-import com.example.coronaaware.ui.ui.StateChartReport;
+import com.example.coronaaware.ui.ui.home.StateChartReport;
 
 import java.util.ArrayList;
 

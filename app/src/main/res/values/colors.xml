@@ -6,9 +6,6 @@
 
     <color name="colorHint">#FF7600</color>
     <color name="colorBlack">#000000</color>
-    <color name="colorWhite">#FFFFFF</color>
     <color name="colorBackground">#DDDDDD</color>
-    <color name="silverChalice">#aaaaaa</color>
     <color name="colorOrange">#FF7600</color>
-    <string name="colorTranspanrnt"></string>
 </resources>

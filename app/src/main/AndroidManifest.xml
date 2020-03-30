@@ -22,15 +22,15 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".ui.ui.ApprovalActivity"
+            android:name=".ui.ui.adminActivity.ApprovalActivity"
             android:theme="@style/AppTheme"></activity>
         <activity
-            android:name=".ui.ui.StateChartReport"
+            android:name=".ui.ui.home.StateChartReport"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.ui.StateActivity"
+            android:name=".ui.ui.home.StateActivity"
             android:theme="@style/AppTheme" />
-        <activity android:name=".ui.ui.RegisterMainActivity" /> <!-- [START fcm_default_icon] -->
+        <activity android:name=".ui.ui.register.RegisterMainActivity" /> <!-- [START fcm_default_icon] -->
         <!--
  Set custom default icon. This is used when no icon is set for incoming notification messages.
              See README(https://goo.gl/l4GJaQ) for more.
@@ -49,7 +49,7 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="@string/default_notification_channel_id" /> <!-- [END fcm_default_channel] -->
-        <activity android:name=".ui.ui.SplashActivity">
+        <activity android:name=".ui.ui.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -57,30 +57,30 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.ui.SenderRegisterActivity"
+            android:name=".ui.ui.register.SenderRegisterActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.ui.SignUpActivity"
+            android:name=".ui.ui.register.SignUpActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.ui.WebViewActivity"
+            android:name=".ui.ui.autho.WebViewActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.ui.UserActivity"
+            android:name=".ui.ui.adminActivity.UserActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.ui.FirstWalkthroughActivity"
+            android:name=".ui.ui.splash.FirstWalkthroughActivity"
             android:launchMode="singleTask"
             android:screenOrientation="fullSensor"
             android:theme="@style/NoActionBar" />
         <activity
-            android:name=".ui.ui.MainActivity"
+            android:name=".ui.ui.adminActivity.MainActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.ui.OfficalsMainActivity"
+            android:name=".ui.ui.offials.OfficalsMainActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.ui.AdminMainActivity"
+            android:name=".ui.ui.adminActivity.AdminMainActivity"
             android:theme="@style/AppTheme" />
 
         <service
@@ -91,8 +91,8 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".ui.ui.VerifyPhoneActivity" />
-        <activity android:name=".ui.ui.OTPAuthentication" />
+        <activity android:name=".ui.ui.autho.VerifyPhoneActivity" />
+        <activity android:name=".ui.ui.autho.OTPAuthentication" />
     </application>
 
 </manifest>

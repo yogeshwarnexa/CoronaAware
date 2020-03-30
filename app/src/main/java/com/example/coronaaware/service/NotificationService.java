@@ -16,7 +16,7 @@ import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
 import com.example.coronaaware.R;
-import com.example.coronaaware.ui.ui.MainActivity;
+import com.example.coronaaware.ui.ui.adminActivity.MainActivity;
 import com.example.coronaaware.utlies.MyWorker;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;

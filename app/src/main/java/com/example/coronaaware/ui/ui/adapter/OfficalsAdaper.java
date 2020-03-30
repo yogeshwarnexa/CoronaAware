@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.coronaaware.R;
 import com.example.coronaaware.model.UserRegisterModel;
-import com.example.coronaaware.ui.ui.ApprovalActivity;
+import com.example.coronaaware.ui.ui.adminActivity.ApprovalActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

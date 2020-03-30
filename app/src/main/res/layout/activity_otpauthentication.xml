@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/covid_19_bg"
-    tools:context=".ui.ui.OTPAuthentication">
+    tools:context=".ui.ui.autho.OTPAuthentication">
 
     <RelativeLayout
         android:id="@+id/relativeLayout"

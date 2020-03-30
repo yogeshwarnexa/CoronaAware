@@ -63,7 +63,6 @@
                 android:textColorHint="@color/colorHint">
 
                 <TextView
-                    android:id="@+id/header"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
@@ -71,7 +70,6 @@
                     android:textColor="@color/colorHint"
                     android:textSize="20dp" />
                 <RadioButton
-                    android:id="@+id/radioMale"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -81,7 +79,6 @@
                     android:textSize="20dp" />
 
                 <RadioButton
-                    android:id="@+id/radioFemale"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"

@@ -18,16 +18,11 @@
     <string name="default_notification_channel_name" translatable="true">Weather</string>
     <!-- [END fcm_default_icon_string] -->
     <string name="msg_subscribe_failed">Failed to subscribe to weather topic</string>
-    <string name="fcm_message">COVID-19</string>
 
 
     <!--Firebase-->
 
-    <string name="index_sing_up_app" translatable="false">@string/title_sing_up</string>
-    <string name="title_sing_up" translatable="false">Sign Up</string>
     <string name="firebase_username" translatable="false">Email Id*</string>
-    <string name="firebase_password" translatable="false">Password</string>
-    <string name="firebase_confirmpassword" translatable="false">Confirm Password</string>
     <string name="firebase_emailrequired" translatable="false">Email is required</string>
     <string name="firebase_namerequired" translatable="false">Name is required</string>
     <string name="firebase_mobolerequired" translatable="false">Mobile No is required</string>
@@ -35,14 +30,6 @@
     <string name="firebase_occupation_required" translatable="false">Occupation is required</string>
     <string name="firebase_emailValidation" translatable="false">Please enter a valid email</string>
     <string name="firebase_mobileValidation" translatable="false">Please enter a valid mobile</string>
-    <string name="firebase_passwordrequired" translatable="false">Password is required</string>
-    <string name="firebase_passwordConfirmrequired" translatable="false">Password is miss matched!</string>
-    <string name="firebase_passwordValidation" translatable="false">Minimum lenght of password should be 6</string>
-    <string name="firebase_alredy_register" translatable="false">You are already registered</string>
-    <string name="firebase_alredy_login" translatable="false">You are already Loged in</string>
-    <string name="firebase_login_success" translatable="false">You have successfully logged in</string>
-    <string name="firebase_logout_success" translatable="false">You have successfully logged out</string>
-    <string name="firebase_needto_login" translatable="false">You need to login first!</string>
     <!--Registration-->
     <string name="registration">Registration</string>
     <string name="name">Name*</string>
@@ -54,45 +41,23 @@
     <string name="state">State*</string>
     <string name="pincode">Pin code*</string>
 
-    <string name="patient_registration">Patient Registration</string>
-    <string name="title_activity_main">MainActivity</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
-
-    <string name="menu_home">Home</string>
     <string name="menu_gallery">Reports</string>
     <string name="menu_slideshow">Patient Register</string>
-    <string name="menu_logout">Log Out</string>
-    <string name="menu_notifications">Notifications</string>
-    <string name="home_second">Home Second</string>
-    <string name="search_text">Search  with Country code Here</string>
 
 
-    <!--Covid-19-->F
+    <!--Covid-19-->
     <string name="covid19Title">Coronavirus outbreak in </string>
-    <string name="ConfirmedCases">Confirmed Cases</string>
-    <string name="RecoveredCases">Recovered Cases</string>
-    <string name="DeathCases">Death Cases</string>
     <!--Covid19 Values-->
     <string name="covid19TitleValue">Coronavirus outbreak in World wide</string>
     <string name="ConfirmedCasesValue">Confirmed Cases</string>
     <string name="RecoveredCasesValue">Recovered Cases</string>
     <string name="DeathCasesValue">Death Cases</string>
     <string name="tutorial_skip">Skip</string>
-    <string name="get_started_description">welocome</string>
     <string name="poweredBy">Powered By \n Nexware Technologies</string>
     <string name="register_here">Others Register Here >>>></string>
     <string name="login">Login Here >>></string>
     <string name="Govt.Officials" tools:ignore="ExtraTranslation">Govt.Officials Register Here >>>></string>
-    <string name="title_activity_bottom">BottomActivity</string>
-    <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
-    <string name="title_activity_main2">Main2Activity</string>
     <string name="userType">user</string>
     <string name="API">https://api.rootnet.in/covid19-in/stats/latest</string>
 
@@ -103,7 +68,6 @@
     <string name="discharged">discharged</string>
     <string name="deaths">deaths</string>
     <string name="State">State Wise Report >>></string>
-    <string name="referesh">lastRefreshed</string>
     <string name="infoText">Time of fight this together!</string>
     <string name="toutorial">toutorial</string>
     <string name="districtValue">districtValue</string>
