@@ -270,12 +270,14 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                         String userState = sharedpreferences.getString(getString(R.string.userType), "");
                         if (userState.equals("user")) {
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            finish();
                         } else if (userState.equals("officals")) {
                             startActivity(new Intent(getApplicationContext(), OfficalsMainActivity.class));
+                            finish();
                         } else if (userState.equals("admin")) {
-                            Log.e("Admin", "Login");
+                            startActivity(new Intent(getApplicationContext(), AdminMainActivity.class));
+                            finish();
                         }
-                        finish();
                     } else {
                         progressBar.setVisibility(View.GONE);
                         mapping(district, newToken, name);
@@ -319,10 +321,13 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                     String userState = sharedpreferences.getString(getString(R.string.userType), "");
                     if (userState.equals("user")) {
                         startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        finish();
                     } else if (userState.equals("officals")) {
                         startActivity(new Intent(getApplicationContext(), OfficalsMainActivity.class));
+                        finish();
                     } else if (userState.equals("admin")) {
                         startActivity(new Intent(getApplicationContext(), AdminMainActivity.class));
+                        finish();
                     }
 
 

@@ -256,7 +256,7 @@ public class PatientFragment extends Fragment implements View.OnClickListener {
     private void sendNotification(String accessToken) {
         System.out.println("Data saved successfully.");
         progressBar.setVisibility(View.GONE);
-        Toast.makeText(getActivity(), "Data saved successfully.", Toast.LENGTH_SHORT).show();
+        // Toast.makeText(getActivity(), "Data saved successfully.", Toast.LENGTH_SHORT).show();
         NOTIFICATION_TITLE = "TEST";
         NOTIFICATION_MESSAGE = "Success";
 

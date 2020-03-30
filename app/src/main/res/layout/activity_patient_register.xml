@@ -4,190 +4,198 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-    <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:orientation="vertical"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp">
-        <EditText
-            android:id="@+id/username"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Patient Name*"
-            android:maxLength="20"
-            android:layout_marginBottom="5dp"
-            android:textColorHint="@color/colorHint" />
+        android:layout_height="match_parent">
 
-        <EditText
-            android:id="@+id/phonenumber"
+        <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/username"
-            android:hint="Contact Number*"
-            android:maxLength="10"
-            android:layout_marginBottom="5dp"
-            android:inputType="phone"
-            android:textColorHint="@color/colorHint" />
+            android:layout_weight="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints">
 
-        <EditText
-            android:id="@+id/age"
-            android:maxLength="2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/phonenumber"
-            android:hint="Age*"
-            android:layout_marginBottom="5dp"
-            android:inputType="number"
-            android:textColorHint="@color/colorHint" />
-
-            <RadioGroup
-                android:id="@+id/radioGroup"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:textColorHint="@color/colorHint">
+                android:layout_centerVertical="true"
+                android:orientation="vertical"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <EditText
+                    android:id="@+id/username"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:hint="Patient Name*"
+                    android:maxLength="20"
+                    android:textColorHint="@color/colorHint" />
 
-                    android:text="Gender:"
-                    android:textColor="@color/colorHint"
-                    android:textSize="20dp" />
-                <RadioButton
-                    android:layout_width="fill_parent"
+                <EditText
+                    android:id="@+id/phonenumber"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textColor="@color/colorHint"
-                    android:checked="false"
-                    android:text="  Male"
-                    android:textSize="20dp" />
+                    android:layout_below="@+id/username"
+                    android:layout_margin="10dp"
+                    android:hint="Contact Number*"
+                    android:inputType="phone"
+                    android:maxLength="10"
+                    android:textColorHint="@color/colorHint" />
 
-                <RadioButton
-                    android:layout_width="fill_parent"
+                <EditText
+                    android:id="@+id/age"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:checked="false"
-                    android:text="   Female"
-                    android:textColor="@color/colorHint"
-                    android:textSize="20dp" />
-            </RadioGroup>
+                    android:layout_below="@+id/phonenumber"
+                    android:layout_margin="10dp"
+                    android:hint="Age*"
+                    android:inputType="number"
+                    android:maxLength="2"
+                    android:textColorHint="@color/colorHint" />
 
-            <EditText
-            android:id="@+id/bloodgrp"
-            android:maxLength="3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/age"
-            android:hint="Blood Group*"
-                android:layout_marginBottom="5dp"
-            android:textAllCaps="true"
-            android:textColorHint="@color/colorHint" />
+                <RadioGroup
+                    android:id="@+id/radioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:textColorHint="@color/colorHint">
 
-        <EditText
-            android:id="@+id/district"
-            android:maxLength="15"
-            android:layout_marginBottom="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/bloodgrp"
-            android:hint="District*"
-            android:textColorHint="@color/colorHint" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
 
-        <EditText
-            android:id="@+id/aad_no"
-            android:maxLength="16"
-            android:inputType="number"
-            android:layout_marginBottom="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/district"
-            android:hint="Patient AADHAAR NUMBER*"
-            android:textColorHint="@color/colorHint" />
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_gravity="center_horizontal"
-    android:gravity="center_vertical|center">
-        <TextView
-            android:id="@+id/patient_aadhaar_photo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/aad_no"
-            android:layout_marginBottom="5dp"
-            android:layout_centerInParent="true"
-            android:text="AADHAAR PHOTO"
-            android:textColorHint="#000"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+                        android:text="Gender:"
+                        android:textColor="@color/colorHint"
+                        android:textSize="20dp" />
+
+                    <RadioButton
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:checked="false"
+                        android:text="  Male"
+                        android:textColor="@color/colorHint"
+                        android:textSize="20dp" />
+
+                    <RadioButton
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:checked="false"
+                        android:text="   Female"
+                        android:textColor="@color/colorHint"
+                        android:textSize="20dp" />
+                </RadioGroup>
+
+                <EditText
+                    android:id="@+id/bloodgrp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/radioGroup"
+                    android:layout_margin="10dp"
+                    android:hint="Blood Group*"
+                    android:inputType="textCapCharacters"
+                    android:maxLength="3"
+                    android:textColorHint="@color/colorHint" />
+
+                <EditText
+                    android:id="@+id/district"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/bloodgrp"
+                    android:layout_margin="10dp"
+                    android:hint="District*"
+                    android:maxLength="15"
+                    android:textColorHint="@color/colorHint" />
+
+                <EditText
+                    android:id="@+id/aad_no"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/district"
+                    android:layout_margin="10dp"
+                    android:hint="Patient AADHAAR NUMBER*"
+                    android:inputType="number"
+                    android:maxLength="16"
+                    android:textColorHint="@color/colorHint" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_vertical|center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/patient_aadhaar_photo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/aad_no"
+                        android:layout_centerInParent="true"
+                        android:layout_marginBottom="5dp"
+                        android:text="AADHAAR PHOTO"
+                        android:textColorHint="#000"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
 
 
-        <ImageView
-            android:id="@+id/aadhar_photo"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_below="@+id/patient_aadhaar_photo"
-            android:layout_centerInParent="true"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/ic_person_black_24dp" />
+                    <ImageView
+                        android:id="@+id/aadhar_photo"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_below="@+id/patient_aadhaar_photo"
+                        android:layout_centerInParent="true"
+                        android:layout_marginBottom="5dp"
+                        android:background="@drawable/ic_person_black_24dp" />
 
-        <TextView
-            android:id="@+id/patient_photo_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/aadhar_photo"
-            android:layout_centerInParent="true"
-            android:text="PATIENT PHOTO"
-            android:layout_marginBottom="5dp"
-            android:textColorHint="#000"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/patient_photo_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/aadhar_photo"
+                        android:layout_centerInParent="true"
+                        android:layout_marginBottom="5dp"
+                        android:text="PATIENT PHOTO"
+                        android:textColorHint="#000"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
 
-        <ImageView
-            android:id="@+id/patient_photo_img"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_marginBottom="5dp"
-            android:layout_below="@+id/patient_photo_name"
-            android:layout_centerInParent="true"
-            android:background="@drawable/ic_person_black_24dp" />
+                    <ImageView
+                        android:id="@+id/patient_photo_img"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_below="@+id/patient_photo_name"
+                        android:layout_centerInParent="true"
+                        android:layout_marginBottom="5dp"
+                        android:background="@drawable/ic_person_black_24dp" />
 
-</LinearLayout>
-            <Button
-                android:id="@+id/submit_patient_details"
-                android:layout_width="match_parent"
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/submit_patient_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/rounded_button_transparent"
+                    android:text="@string/registration"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorHint" />
+            </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/progressbar"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="10dp"
-                android:layout_marginBottom="5dp"
-                android:background="@drawable/rounded_button_transparent"
-                android:text="@string/registration"
-                android:textAllCaps="false"
-                android:textColor="@color/colorHint" />
-        </LinearLayout>
-        <ProgressBar
-            android:id="@+id/progressbar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:visibility="gone" />
-    </RelativeLayout>
-</ScrollView>
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:visibility="gone" />
+        </RelativeLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
