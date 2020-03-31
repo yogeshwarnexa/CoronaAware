@@ -18,6 +18,7 @@ public class WebViewActivity extends AppCompatActivity {
 
         String title = "About Us";
         setActionBar(title);
+        
 
     }
 

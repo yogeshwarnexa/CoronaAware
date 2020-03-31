@@ -73,4 +73,16 @@
     <string name="districtValue">districtValue</string>
     <string name="update">Update</string>
     <string name="User_info">Your info</string>
+
+    <!--About us info-->
+    <string name="aboutsTitle">WELCOME TO NEXWARE WORLD</string>
+    <string name="aboutComplany">A next generation IT services company focusing on solving the complex problems of business and common people using the cutting edge technologies and innovative brains. We harness the power of emerging technologies (Cloud, IoT, AI…etc) and highly trained human resources to help our clients adapt to the digital  world and make them successful.</string>
+    <string name="serviceTitle">TRENDY SERVICE</string>
+    <string name="serviceOne">Sap Solutions and Services</string>
+    <string name="setviceTwo">Web and Mobile Applications</string>
+    <string name="serviceThree">Cloud and Security Services</string>
+    <string name="servicefour">Business Transformation Services</string>
+    <string name="addressTitle">For More Info</string>
+    <string name="addressCompany">7th Floor, B block, South Wing,\nPricol Caledon Square,\nAvinashi Road,Peelamedu, \nCoimbatore,Tamil Nadu 641004\nLandline :0422 498 2052</string>
+    <string name="landline">0422 498 2052</string>
 </resources>
