@@ -31,7 +31,7 @@
     <string name="firebase_emailValidation" translatable="false">Please enter a valid email</string>
     <string name="firebase_mobileValidation" translatable="false">Please enter a valid mobile</string>
     <!--Registration-->
-    <string name="registration">Registration</string>
+    <string name="registration">Register</string>
     <string name="name">Name*</string>
     <string name="mobile">Mobile*</string>
     <string name="occupation">Occupation*</string>
@@ -69,6 +69,7 @@
     <string name="deaths">deaths</string>
     <string name="State">State Wise Report >>></string>
     <string name="infoText">Time of fight this together!</string>
+    <string name="infoGov">Please Follow Government Directives!</string>
     <string name="toutorial">toutorial</string>
     <string name="districtValue">districtValue</string>
     <string name="update">Update</string>

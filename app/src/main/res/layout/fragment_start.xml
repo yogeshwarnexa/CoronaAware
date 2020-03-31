@@ -22,6 +22,7 @@
         app:srcCompat="@drawable/covid_19_landing" />
 
     <TextView
+        android:id="@+id/time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="100dp"
@@ -32,6 +33,17 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/startButton"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        android:text="@string/infoGov"
+        android:textAlignment="center"
+        android:textColor="@color/colorAccent"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/time" />
 
 
     <Button
