@@ -83,6 +83,7 @@
     <string name="serviceThree">Cloud and Security Services</string>
     <string name="servicefour">Business Transformation Services</string>
     <string name="addressTitle">For More Info</string>
-    <string name="addressCompany">7th Floor, B block, South Wing,\nPricol Caledon Square,\nAvinashi Road,Peelamedu, \nCoimbatore,Tamil Nadu 641004\nLandline :0422 498 2052</string>
+    <string name="addressCompany">7th Floor, B block, South Wing,\nPricol Caledon Square,\nAvinashi Road,Peelamedu, \nCoimbatore,Tamil Nadu 641004\nLandline :0422 498 2052 \nWebsite: https://www.nexware-global.com/</string>
     <string name="landline">0422 498 2052</string>
+    <string name="about_us">About us</string>
 </resources>

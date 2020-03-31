@@ -1,6 +1,10 @@
 package com.example.coronaaware.ui.ui.autho;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -16,9 +20,16 @@ public class WebViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_webview);
 
-        String title = "About Us";
+        String title =getString(R.string.about_us);
         setActionBar(title);
-        
+        ImageView imageView=findViewById(R.id.imageView);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.nexware-global.com/"));
+                startActivity(browserIntent);
+            }
+        });
 
     }
 
