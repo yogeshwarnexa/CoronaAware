@@ -16,7 +16,7 @@ public class WebViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_webview);
 
-        String title = "About Us";
+        String title = "About Nexware";
         setActionBar(title);
 
     }
