@@ -53,7 +53,7 @@
     <string name="RecoveredCasesValue">Recovered Cases</string>
     <string name="DeathCasesValue">Death Cases</string>
     <string name="tutorial_skip">Skip</string>
-    <string name="poweredBy">Powered By \n Nexware Technologies</string>
+    <string name="poweredBy">Powered By</string>
     <string name="register_here">Others Register Here >>>></string>
     <string name="login">Login Here >>></string>
     <string name="Govt.Officials" tools:ignore="ExtraTranslation">Govt.Officials Register Here >>>></string>

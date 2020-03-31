@@ -58,17 +58,10 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="SpUsage" />
 
-
-    <TextView
-        android:id="@+id/powerby1"
+    <include
+        layout="@layout/poweredby"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="@string/poweredBy"
-        android:textAlignment="center"
-        android:textColor="@color/colorAccent"
-        android:textSize="17dp"
-        app:layout_constraintBottom_toBottomOf="@+id/background"
-        app:layout_constraintTop_toBottomOf="@+id/startButton"
-        tools:ignore="MissingConstraints" />
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

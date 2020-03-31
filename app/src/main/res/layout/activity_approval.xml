@@ -8,7 +8,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toTopOf="@+id/powerby1">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -165,4 +166,10 @@
 
         </RelativeLayout>
     </ScrollView>
+
+    <include
+        layout="@layout/poweredby"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

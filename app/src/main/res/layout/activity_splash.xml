@@ -3,5 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/covid_19_landing"
-    tools:context=".ui.ui.splash.SplashActivity"></androidx.constraintlayout.widget.ConstraintLayout>
+    tools:context=".ui.ui.splash.SplashActivity">
+
+    <include
+        layout="@layout/poweredby"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

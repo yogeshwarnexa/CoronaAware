@@ -75,15 +75,10 @@
 
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/powerby"
+    <include
+        layout="@layout/poweredby"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="10dp"
-        android:text="@string/poweredBy"
-        android:textAlignment="center"
-        android:textColor="@color/colorAccent"
-        android:textSize="17dp"
-        tools:ignore="MissingConstraints" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" />
+
 </RelativeLayout>
