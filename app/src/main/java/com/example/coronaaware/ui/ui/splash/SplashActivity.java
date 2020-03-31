@@ -24,7 +24,7 @@ import com.google.firebase.iid.InstanceIdResult;
 
 public class SplashActivity extends AppCompatActivity {
 
-    private static final int SPLASH_DISPLAY_TIME = 2500;
+    private static final int SPLASH_DISPLAY_TIME = 1000;
 
     FirebaseAuth mAuth;
     public static final String MyPREFERENCES = "MyPrefs";

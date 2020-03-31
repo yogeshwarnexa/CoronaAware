@@ -56,8 +56,6 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.Menu_AboutUs:
                 Intent intent = new Intent(MainActivity.this, WebViewActivity.class);
-                intent.putExtra("title", "About Us");
-                intent.putExtra("url", "https://www.nexware-global.com/");
                 startActivity(intent);
                 break;
 

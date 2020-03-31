@@ -1,8 +1,6 @@
 package com.example.coronaaware.ui.ui.autho;
 
 import android.os.Bundle;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -18,14 +16,9 @@ public class WebViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_webview);
 
-        String title = getIntent().getStringExtra("title");
-        if (title != null) {
-            setActionBar(title);
-        }
-        String url = getIntent().getStringExtra("url");
-        if (url != null) {
-            setWebView(url);
-        }
+        String title = "About Us";
+        setActionBar(title);
+
     }
 
     private void setActionBar(String title) {
@@ -35,13 +28,6 @@ public class WebViewActivity extends AppCompatActivity {
             actionBar.setTitle(title);
         }
     }
-
-    private void setWebView(String url) {
-        WebView webView = findViewById(R.id.webView);
-        webView.setWebViewClient(new WebViewClient());
-        webView.loadUrl(url);
-    }
-
 
     @Override
     public void onBackPressed() {
