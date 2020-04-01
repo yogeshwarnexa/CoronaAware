@@ -116,7 +116,7 @@ public class HomeFragment extends Fragment {
         titleConfirmedCasesForeign.setText("Confirmed Cases Foreign:" + pref.getInt(getString(R.string.confirmedCasesForeign), 0));
         titleConfirmedCasesForeign.setTextColor(Color.GREEN);
 
-        titleDischarged.setText("Discharged:" + pref.getInt(getString(R.string.discharged), 0));
+        titleDischarged.setText("Recovered:" + pref.getInt(getString(R.string.discharged), 0));
         titleDischarged.setTextColor(Color.DKGRAY);
 
         titleDeaths.setText("Deaths:" + pref.getInt(getString(R.string.deaths), 0));
