@@ -237,15 +237,21 @@ public class PatientFragment extends Fragment implements View.OnClickListener {
         mQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ArrayList<String> accessToken = new ArrayList<>();
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    MappingModel mappingModel = dataSnapshot1.getValue(MappingModel.class);
-                    accessToken.add(mappingModel.getAccessToken());
-                }
-                if (accessToken.size() > 0) {
-                    sendNotification(accessToken.get(0));
+                if (dataSnapshot.exists()) {
+                    ArrayList<String> accessToken = new ArrayList<>();
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                        MappingModel mappingModel = dataSnapshot1.getValue(MappingModel.class);
+                        accessToken.add(mappingModel.getAccessToken());
+                    }
+                    if (accessToken.size() > 0) {
+                        sendNotification(accessToken.get(0));
+                    }
+                } else {
+                    progressBar.setVisibility(View.GONE);
+                    Toast.makeText(getContext(), "Data Updated.No officials mapped to this district", Toast.LENGTH_SHORT).show();
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
